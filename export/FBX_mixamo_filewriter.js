@@ -155,9 +155,21 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
   var FBX_TIME_UNIT = 46186158000;
 
   // --- Build FBX ASCII ---
+  // three.js FBXLoader's ASCII TextParser tracks nesting depth by counting
+  // literal TAB characters at the start of each line (one tab per depth
+  // level) - space indentation is silently ignored, which drops all nested
+  // content (Connections, Objects, curve data) and leaves e.g.
+  // fbxTree.Connections.connections undefined downstream. L() therefore
+  // tracks depth itself from brace characters and emits real tabs.
   var lines = [];
+  var depth = 0;
 
-  function L(s) { lines.push(s); }
+  function L(s) {
+    var t = s.replace(/^\s+/, '');
+    if (t === '}') depth--;
+    lines.push(new Array(depth + 1).join('\t') + t);
+    if (/\{$/.test(t)) depth++;
+  }
 
   // Header
   L('; FBX 7.4.0 project file');
@@ -341,9 +353,16 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
   // AnimLayer → AnimStack
   L('  C: "OO",' + animLayerId + ',' + animStackId);
 
-  // Model hierarchy (all bones connected to root scene 0)
+  // Model hierarchy - each bone connects to its actual parent bone
+  // (falling back to scene root 0 for the skeleton root)
+  var modelIdByBone = new Map();
   for (var bi = 0; bi < boneDataList.length; bi++) {
-    L('  C: "OO",' + boneDataList[bi].modelId + ',0');
+    modelIdByBone.set(boneDataList[bi].bone, boneDataList[bi].modelId);
+  }
+  for (var bi = 0; bi < boneDataList.length; bi++) {
+    var bd = boneDataList[bi];
+    var parentModelId = bd.bone.parent ? modelIdByBone.get(bd.bone.parent) : undefined;
+    L('  C: "OO",' + bd.modelId + ',' + (parentModelId !== undefined ? parentModelId : 0));
   }
 
   // CurveNode → AnimLayer, CurveNode → Model, Curve → CurveNode
