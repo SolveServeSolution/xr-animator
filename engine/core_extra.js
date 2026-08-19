@@ -233,6 +233,16 @@ var SA_HTA_folder_full = SA_HTA_folder
 
 if (browser_native_mode) {
   SA_HTA_folder_parent = SA_HTA_folder.replace(/[\/\\][^\/\\]+$/, "")
+
+  var p_js_xhr = SA_HTA_folder + '/SA_project.json'
+  try {
+    var p_xhr = new XMLHttpRequest()
+    p_xhr.open('GET', p_js_xhr, false)
+    p_xhr.send()
+    if (p_xhr.status === 200 || p_xhr.status === 0)
+      SA_project_JSON = JSON.parse(p_xhr.responseText)
+  }
+  catch (err) {}
 }
 else {
 var isFile = System.Shell.itemFromPath(SA_HTA_folder).isFileSystem
