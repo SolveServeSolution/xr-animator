@@ -512,7 +512,7 @@ var EC_by_name = (EC.effects_by_name["NV15SpaceCurvature"] || {});
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "NV15SpaceCurvature", [System.Gadget.path + '/images/ST_tex03.jpg', System.Gadget.path + '/images/ST_tex09.jpg', System.Gadget.path + '/images/ST_tex12.png', '[music canvas]'])//, {'VisualizerSpacetimeGrid':{type:'i',type_uniform:'bool',value:1}, 'VisualizerRainbowBlackhole':{type:'i',type_uniform:'bool',value:1}})//, { ST_opacity:{} })
+MMD_SA.MME_PPE_init.call(this, "NV15SpaceCurvature", [System.Gadget.path + '/assets/images/ST_tex03.jpg', System.Gadget.path + '/assets/images/ST_tex09.jpg', System.Gadget.path + '/assets/images/ST_tex12.png', '[music canvas]'])//, {'VisualizerSpacetimeGrid':{type:'i',type_uniform:'bool',value:1}, 'VisualizerRainbowBlackhole':{type:'i',type_uniform:'bool',value:1}})//, { ST_opacity:{} })
 	}
 
 };

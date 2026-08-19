@@ -166,7 +166,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "FunkyDiscoBall", refresh_all_uniforms
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "FunkyDiscoBall", [System.Gadget.path + '/images/ST_cube02_0.jpg|CUBE', System.Gadget.path + '/images/ST_tex16.png', '[music canvas]'])
+MMD_SA.MME_PPE_init.call(this, "FunkyDiscoBall", [System.Gadget.path + '/assets/images/ST_cube02_0.jpg|CUBE', System.Gadget.path + '/assets/images/ST_tex16.png', '[music canvas]'])
 	}
 
 };

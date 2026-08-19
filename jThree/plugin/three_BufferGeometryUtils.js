@@ -3,7 +3,7 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
-//https://github.com/mrdoob/three.js/wiki/Migration-Guide
+//https://github.com/mrdoob/three/wiki/Migration-Guide
 
 THREE.BufferGeometryUtils = {
 

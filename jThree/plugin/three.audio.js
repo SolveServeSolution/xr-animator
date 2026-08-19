@@ -1,4 +1,4 @@
-// backported from https://github.com/mrdoob/three.js/tree/dev/src/audio
+// backported from https://github.com/mrdoob/three/tree/dev/src/audio
 
 (function () {
 

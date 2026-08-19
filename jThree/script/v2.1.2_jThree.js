@@ -920,7 +920,7 @@ THREE.Quaternion.prototype = {
 
 		}
 
-// AT: backported (https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.js)
+// AT: backported (https://raw.githubusercontent.com/mrdoob/three/dev/build/three.js)
 			const sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
 
 			if (sqrSinHalfTheta <= Number.EPSILON) {
@@ -1003,7 +1003,7 @@ return this.normalize();
 
 // AT: to AxisAngle
 // http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToAngle/
-// https://github.com/mrdoob/three.js/blob/master/src/math/Vector4.js
+// https://github.com/mrdoob/three/blob/master/src/math/Vector4.js
 ,toAxisAngle: function () {
   if (this.w > 1) this.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
   var angle = 2 * Math.acos(this.w);
@@ -1023,7 +1023,7 @@ return this.normalize();
 }
 
 // AT: backported
-// https://github.com/mrdoob/three.js/blob/master/src/math/Quaternion.js
+// https://github.com/mrdoob/three/blob/master/src/math/Quaternion.js
 ,setFromUnitVectors: function ( vFrom, vTo ) {
 
 		// assumes direction vectors vFrom and vTo are normalized
@@ -2062,8 +2062,8 @@ THREE.Vector3.prototype = {
 */
 
 // AT: backported
-// https://github.com/mrdoob/three.js/blob/dev/src/math/Euler.js
-// https://github.com/mrdoob/three.js/issues/5659
+// https://github.com/mrdoob/three/blob/dev/src/math/Euler.js
+// https://github.com/mrdoob/three/issues/5659
 
 		setEulerFromQuaternion: function () {
 
@@ -2180,7 +2180,7 @@ window.addEventListener("jThree_ready", function () {matrix = new THREE.Matrix4(
 	}()
 
 // AT: project, unproject
-// https://github.com/mrdoob/three.js/blob/master/src/math/Vector3.js
+// https://github.com/mrdoob/three/blob/master/src/math/Vector3.js
 ,project: function () {
 
 			var matrix;
@@ -2212,7 +2212,7 @@ window.addEventListener("jThree_ready", function () {matrix = new THREE.Matrix4(
 }()
 
 // AT: spherical coordinate system
-// https://github.com/mrdoob/three.js/blob/master/src/math/Spherical.js
+// https://github.com/mrdoob/three/blob/master/src/math/Spherical.js
 // https://en.wikipedia.org/wiki/Spherical_coordinate_system
 ,toSphericalCoords: function (r) {
 
@@ -6110,7 +6110,7 @@ THREE.Clock.prototype = {
 
 	constructor: THREE.Clock,
 
-// backported from https://github.com/mrdoob/three.js/blob/dev/src/core/Clock.js (r99)
+// backported from https://github.com/mrdoob/three/blob/dev/src/core/Clock.js (r99)
 	start: function () {
 
 		this.startTime = ( typeof performance === 'undefined' ? Date : performance ).now(); // see #10732
@@ -15851,7 +15851,7 @@ if (parameters.canvas) parameters.canvas = document.getElementById(parameters.ca
 
 	// morphs
 // AT: increase maxMorphTargets from 8 to 16, maxMorphNormals from 4 to 8
-// https://github.com/mrdoob/three.js/issues/14441
+// https://github.com/mrdoob/three/issues/14441
 	this.maxMorphTargets = 8;
 	this.maxMorphNormals = 4;
 
@@ -20340,7 +20340,7 @@ renderObjects( _transparent, false, "transparent", camera, lights, fog, useBlend
 		renderPlugins( this.renderPluginsPost, scene, camera );
 
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 if (renderTarget && renderTarget._use_multisample) {
   _gl.bindFramebuffer( _gl.READ_FRAMEBUFFER, renderTarget.__webglMSAAFramebuffer );
   _gl.bindFramebuffer( _gl.DRAW_FRAMEBUFFER, renderTarget.__webglFramebuffer );
@@ -20925,7 +20925,7 @@ if ((object._model_index != null) && /^(\d+)/.test(g)) {
 	};
 
 // AT: back ported from r59 (z order fix)
-// https://github.com/mrdoob/three.js/issues/3315
+// https://github.com/mrdoob/three/issues/3315
 
 	function addBuffer( objlist, buffer, object ) {
 
@@ -23539,7 +23539,7 @@ else
 
 		} else {
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 // FIXME: We don't support !depth !stencil
 if (renderTarget._use_multisample) {
   console.log("FIXME: We don't support !depth !stencil")
@@ -23603,7 +23603,7 @@ var glFormat_internal = MMD_SA.webgl2_RGBA_internal(_gl, glFormat, glType);
 				renderTarget.__webglFramebuffer = _gl.createFramebuffer();
 
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 if (renderTarget._use_multisample) {
   renderTarget.__webglMSAAFramebuffer = _gl.createFramebuffer();
   renderTarget.__webglMSAAColorbuffer = _gl.createRenderbuffer();
@@ -23643,7 +23643,7 @@ if (renderTarget._use_multisample) {
 //				if ( isTargetPowerOfTwo ) _gl.generateMipmap( _gl.TEXTURE_2D );
 
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 // NOTE: .__webglRenderbuffer is effectively .__webglDepthbuffer in newer version of three.js...?
 // NOTE: It seems there is no need to use .__webglRenderbuffer here at all if multisample is used (at least for the case of System Animator).
 if (!renderTarget._use_multisample)
@@ -23673,7 +23673,7 @@ if (!renderTarget._use_multisample)
 
 				} else {
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 // We specify 0 samples here because the MSAA FBO has its own renderbuffers.
 var _use_multisample = renderTarget._use_multisample
 renderTarget._use_multisample = null
@@ -23715,7 +23715,7 @@ renderTarget._use_multisample = _use_multisample
 			} else {
 
 // AT: WebGL2
-// https://github.com/mrdoob/three.js/pull/8120/files
+// https://github.com/mrdoob/three/pull/8120/files
 if (renderTarget._use_multisample) {
   framebuffer = renderTarget.__webglMSAAFramebuffer;
 }
@@ -37584,7 +37584,7 @@ if (self.MMD_SA && !src) {
 
 // z fighting/blinking issues (use a bigger "near" value? smaller near-to-far range?)
 //https://stackoverflow.com/questions/40328722/how-can-i-solve-z-fighting-using-three-js
-//https://github.com/mrdoob/three.js/issues/582
+//https://github.com/mrdoob/three/issues/582
 //https://stackoverflow.com/questions/17786723/flickering-planes
   xml +=
   '			<camera id="MMD_camera" ' + ((MMD_SA_options.camera_type) ? 'type="' + MMD_SA_options.camera_type + '" ' : '') + ((MMD_SA_options.camera_param) ? 'param="' + ((typeof MMD_SA_options.camera_param == 'string') ? MMD_SA_options.camera_param : MMD_SA_options.camera_param.join(" ")) + '" ' : '') + 'style="position:' + MMD_SA_options.camera_position.join(" ") + '; lookAt:' + (MMD_SA_options.camera_position[0] + ' ' + MMD_SA_options.camera_position[1]) + ' 0;" />\n'

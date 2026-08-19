@@ -966,7 +966,7 @@ if (System._browser.camera.mirror_3D) pageX = this.screen.width - ( pageX - this
 	},
 
 // AT: EPS
-// https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js
+// https://github.com/mrdoob/three/blob/master/examples/js/controls/TrackballControls.js
 EPS: 0.000001,
 
 	update: function () {

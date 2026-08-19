@@ -154,7 +154,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "Adrenaline", refresh_all_uniforms)
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "Adrenaline", ['[music canvas]', System.Gadget.path + '/images/ST_tex11.png'])
+MMD_SA.MME_PPE_init.call(this, "Adrenaline", ['[music canvas]', System.Gadget.path + '/assets/images/ST_tex11.png'])
 	}
 
 };

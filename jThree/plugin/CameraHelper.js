@@ -1,4 +1,4 @@
-// backported from https://github.com/mrdoob/three.js/blob/master/src/objects/LineSegments.js
+// backported from https://github.com/mrdoob/three/blob/master/src/objects/LineSegments.js
 
 /**
  * @author mrdoob / http://mrdoob.com/

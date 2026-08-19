@@ -235,7 +235,7 @@ var EC = MMD_SA_options.MME.PostProcessingEffects
 if (!EC._texture_common)
   EC._texture_common = {}
 
-var tex_list = this._texture_list = ['[music canvas]', System.Gadget.path + '/images/ST_tex11.png']
+var tex_list = this._texture_list = ['[music canvas]', System.Gadget.path + '/assets/images/ST_tex11.png']
 var c = EC._music_canvas
 if (!c) {
   c = EC._music_canvas = document.createElement("canvas")

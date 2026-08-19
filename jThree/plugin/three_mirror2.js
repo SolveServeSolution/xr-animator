@@ -643,7 +643,7 @@ THREE.Math.isPowerOfTwo = function ( value ) {
 
 THREE.Vector3.prototype.setFromMatrixPosition = THREE.Vector3.prototype.getPositionFromMatrix;
 
-// https://github.com/mrdoob/three.js/blob/master/src/cameras/PerspectiveCamera.js (r71)
+// https://github.com/mrdoob/three/blob/master/src/cameras/PerspectiveCamera.js (r71)
 THREE.PerspectiveCamera.prototype.clone = function () {
 
 	var camera = new THREE.PerspectiveCamera();

@@ -114,7 +114,7 @@ e.uniforms[ 'iGlobalTime2' ].value = t + this._time_delta
 
 	_init: function () {
 var EC = MMD_SA_options.MME.PostProcessingEffects
-MMD_SA.MME_PPE_init.call(this, "DeformReliefTunnel", [EC.effects_by_name.DeformReliefTunnel.tex0||System.Gadget.path + '/images/ST_tex01.jpg'])
+MMD_SA.MME_PPE_init.call(this, "DeformReliefTunnel", [EC.effects_by_name.DeformReliefTunnel.tex0||System.Gadget.path + '/assets/images/ST_tex01.jpg'])
 	}
 
 };

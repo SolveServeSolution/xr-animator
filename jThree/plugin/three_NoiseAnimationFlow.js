@@ -125,7 +125,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "NoiseAnimationFlow", refresh_all_unif
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "NoiseAnimationFlow", [System.Gadget.path + '/images/ST_tex12.png'], { ST_opacity:{} })
+MMD_SA.MME_PPE_init.call(this, "NoiseAnimationFlow", [System.Gadget.path + '/assets/images/ST_tex12.png'], { ST_opacity:{} })
 	}
 
 };

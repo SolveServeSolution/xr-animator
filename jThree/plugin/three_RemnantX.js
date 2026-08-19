@@ -399,7 +399,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "RemnantX", refresh_all_uniforms, { ST
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "RemnantX", [System.Gadget.path + '/images/ST_tex16.png'], { ST_opacity:{} })
+MMD_SA.MME_PPE_init.call(this, "RemnantX", [System.Gadget.path + '/assets/images/ST_tex16.png'], { ST_opacity:{} })
 	}
 
 };

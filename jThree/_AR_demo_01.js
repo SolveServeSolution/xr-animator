@@ -156,9 +156,9 @@ if ((checkpoint % 1 < 0.2) && (para_SA._frame_checkpoint != parseInt(checkpoint)
   }
 
   if (!MMD_SA_options.motion.length) {
-    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/standmix2_modified.vmd' })
-    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/sleep/sleep01.vmd' })
-    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/model/camera_appeal01.vmd' })
+    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/standmix2_modified.vmd' })
+    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/sleep/sleep01.vmd' })
+    MMD_SA_options.motion.push({ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/model/camera_appeal01.vmd' })
     if (motion_HM)
       MMD_SA_options.motion.push(motion_HM)
     if (motion_drum)
@@ -495,7 +495,7 @@ return ((this.frame >= 27) ? 0 : (27 - this.frame)/27)
       }
     }
 
-   ,motion: {path:'MMD.js/motion/hit/h01_何かにぶつかる小.vmd', match:{skin_jThree:{ test: function(name) { return !((name=='センター') || (name=='上半身') || (name=='下半身') || (name.indexOf("ＩＫ") != -1) || (/^(\u5DE6|\u53F3)(\u8DB3|\u3072\u3056)/.test(name))); } }, morph_jThree:true}}
+   ,motion: {path:'assets/models/motion/hit/h01_何かにぶつかる小.vmd', match:{skin_jThree:{ test: function(name) { return !((name=='センター') || (name=='上半身') || (name=='下半身') || (name.indexOf("ＩＫ") != -1) || (/^(\u5DE6|\u53F3)(\u8DB3|\u3072\u3056)/.test(name))); } }, morph_jThree:true}}
 
    ,animation_check: MMD_SA.custom_action_default["cover_undies"].animation_check
   }
@@ -530,7 +530,7 @@ this._cover_chest_=false;
         }
       }
 
-     ,motion: {path:'MMD.js/motion/cover_chest_v02.vmd', match:{skin_jThree:/^(\u5DE6|\u53F3)(\u80A9|\u8155|\u3072\u3058|\u624B\u9996|\u624B\u6369|.\u6307.)/, morph_jThree:true}}
+     ,motion: {path:'assets/models/motion/cover_chest_v02.vmd', match:{skin_jThree:/^(\u5DE6|\u53F3)(\u80A9|\u8155|\u3072\u3058|\u624B\u9996|\u624B\u6369|.\u6307.)/, morph_jThree:true}}
     }
     custom_action_new.push(_cover_chest)
   }
@@ -540,8 +540,8 @@ this._cover_chest_=false;
 // extra GOML
   MMD_SA.GOML_head +=
   '<geo id="SignGEO" type="Plane" param="5 5" />\n'
-+ '<txr id="SignLoopTXR" src="' + (toFileProtocol(System.Gadget.path + '/images/sign_loop.png')) + '" />\n'
-+ '<txr id="SignConstructionTXR" src="' + (toFileProtocol(System.Gadget.path + '/images/sign_construction.png')) + '" />\n'
++ '<txr id="SignLoopTXR" src="' + (toFileProtocol(System.Gadget.path + '/assets/images/sign_loop.png')) + '" />\n'
++ '<txr id="SignConstructionTXR" src="' + (toFileProtocol(System.Gadget.path + '/assets/images/sign_construction.png')) + '" />\n'
 + '<mtl id="SignLoopMTL" type="MeshBasic" param="map:#SignLoopTXR;" />\n'
 + '<mtl id="SignConstructionMTL" type="MeshBasic" param="map:#SignConstructionTXR;" />\n';
 
@@ -1229,17 +1229,17 @@ morph_list.forEach(function (v) {
   }
 
   MMD_SA_options.motion.push(
-  { must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/hit/w01_すべって尻もち.vmd' }
+  { must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/hit/w01_すべって尻もち.vmd' }
 // ,{ must_load:true, no_shuffle:true, path:'C:\\Users\\User\\Downloads\\MikuMikuDanceE_v739\\MikuMikuDanceE_v739\\UserFile\\Motion\\起き上がりムーブ\\ネックスプリング.vmd' }
 
 // skipped for custom_action
-// ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/hit/h01_何かにぶつかる小.vmd' }
+// ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/hit/h01_何かにぶつかる小.vmd' }
 
- ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/casual/女の子座り→立ち上がる_gumi_v01.vmd' }
- ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/casual/へなへなと座り込む_gumi.vmd' }
- ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/walk_n_run/walk_hip.vmd' }
- ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/walk_n_run/front flip.vmd' }
- ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/MMD.js/motion/kidnap.vmd' }
+ ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/casual/女の子座り→立ち上がる_gumi_v01.vmd' }
+ ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/casual/へなへなと座り込む_gumi.vmd' }
+ ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/walk_n_run/walk_hip.vmd' }
+ ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/walk_n_run/front flip.vmd' }
+ ,{ must_load:true, no_shuffle:true, path:System.Gadget.path + '/assets/models/motion/kidnap.vmd' }
 
 // ,{ must_load:true, no_shuffle:true, path:Settings.f_path + '/motion/八極拳モーション詰め合わせ/八極小架_loop.vmd' }
 // ,{ must_load:true, no_shuffle:true, path:Settings.f_path + '/motion/八極拳モーション詰め合わせ/金剛八式_loop.vmd' }
@@ -1253,4 +1253,4 @@ morph_list.forEach(function (v) {
 })();
 
 // main js
-//document.write('<script language="JavaScript" src="MMD.js/MMD_SA.js"></scr'+'ipt>');
+//document.write('<script language="JavaScript" src="engine/MMD_SA.js"></scr'+'ipt>');

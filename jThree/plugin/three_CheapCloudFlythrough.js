@@ -292,7 +292,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "CheapCloudFlythrough", refresh_all_un
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "CheapCloudFlythrough", [System.Gadget.path + '/images/ST_tex16.png'], { ST_opacity:{} })
+MMD_SA.MME_PPE_init.call(this, "CheapCloudFlythrough", [System.Gadget.path + '/assets/images/ST_tex16.png'], { ST_opacity:{} })
 	}
 
 };

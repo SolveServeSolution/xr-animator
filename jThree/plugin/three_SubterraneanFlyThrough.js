@@ -414,7 +414,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "SubterraneanFlyThrough", refresh_all_
 
 	_init: function () {
 var EC = MMD_SA_options.MME.PostProcessingEffects
-MMD_SA.MME_PPE_init.call(this, "SubterraneanFlyThrough", [EC.effects_by_name.SubterraneanFlyThrough.tex0||System.Gadget.path + '/images/ST_tex01.jpg'], { ST_opacity:{} })
+MMD_SA.MME_PPE_init.call(this, "SubterraneanFlyThrough", [EC.effects_by_name.SubterraneanFlyThrough.tex0||System.Gadget.path + '/assets/images/ST_tex01.jpg'], { ST_opacity:{} })
 	}
 
 };

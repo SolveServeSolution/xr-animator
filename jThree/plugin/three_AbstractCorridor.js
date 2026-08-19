@@ -355,8 +355,8 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "AbstractCorridor", refresh_all_unifor
 var EC = MMD_SA_options.MME.PostProcessingEffects
 
 MMD_SA.MME_PPE_init.call(this, "AbstractCorridor", [
-  EC.effects_by_name.AbstractCorridor.tex0||System.Gadget.path + '/images/ST_tex08.jpg'
- ,EC.effects_by_name.AbstractCorridor.tex1||System.Gadget.path + '/images/ST_tex05.jpg'
+  EC.effects_by_name.AbstractCorridor.tex0||System.Gadget.path + '/assets/images/ST_tex08.jpg'
+ ,EC.effects_by_name.AbstractCorridor.tex1||System.Gadget.path + '/assets/images/ST_tex05.jpg'
 ], { ST_opacity:{} });
 	}
 

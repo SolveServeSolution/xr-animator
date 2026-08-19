@@ -368,7 +368,7 @@ MMD_SA.MME_PPE_refreshUniforms.call(this, "Cubescape", refresh_all_uniforms)
 	},
 
 	_init: function () {
-MMD_SA.MME_PPE_init.call(this, "Cubescape", ['[music canvas]', System.Gadget.path + '/images/ST_tex05.jpg'])
+MMD_SA.MME_PPE_init.call(this, "Cubescape", ['[music canvas]', System.Gadget.path + '/assets/images/ST_tex05.jpg'])
 	}
 
 };
