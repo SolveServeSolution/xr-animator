@@ -304,14 +304,14 @@ if (w.Facebook_SA_icon_index != null)
 
 switch (post.type) {
   case "video":
-    icon.load(System.Gadget.path+'\\images\\icon_film_64x64.png')
+    icon.load(System.Gadget.path+'\\assets\\images\\icon_film_64x64.png')
     if (/\.(mp4)[\?$]/.test(post.source))
       post._context_menu_para.play_video = true
     else
       post._context_menu_para.visit_link = true
     break
   case "link":
-    icon.load(System.Gadget.path+'\\images\\icon_link_64x64.png')
+    icon.load(System.Gadget.path+'\\assets\\images\\icon_link_64x64.png')
     break
   default:
     icon.load(w.Settings.f_path+'\\parts\\_dummy_img.png')

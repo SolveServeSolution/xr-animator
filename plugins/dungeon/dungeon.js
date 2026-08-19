@@ -4372,8 +4372,8 @@ if (MMD_SA_options.use_CircularSpectrum) {
 this.grid_material_list = options.grid_material_list || [
 // ceil
   {
-  map: System.Gadget.path + "\\images\\_dungeon\\tex\\3dtextures.me\\Stone Wall 002\\Stone_Wall_002_COLOR_AO.jpg"
- ,normalMap: System.Gadget.path + "\\images\\_dungeon\\tex\\3dtextures.me\\Stone Wall 002\\Stone_Wall_002_NRM.jpg"
+  map: System.Gadget.path + "\\assets\\images\\_dungeon\\tex\\3dtextures.me\\Stone Wall 002\\Stone_Wall_002_COLOR_AO.jpg"
+ ,normalMap: System.Gadget.path + "\\assets\\images\\_dungeon\\tex\\3dtextures.me\\Stone Wall 002\\Stone_Wall_002_NRM.jpg"
  ,geo_by_lvl: [[1,1]]
  ,distance_by_lvl: []
   }
@@ -9050,7 +9050,7 @@ MMD_SA_options.Dungeon._states.object_click_disabled = false;
 }
 
 if (!this.motion["PC down"]) {
-  this.motion["PC down"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション３\\ナイトミク\\k.miku-down_modified.vmd',
+  this.motion["PC down"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション３\\ナイトミク\\k.miku-down_modified.vmd',
     para: { adjust_center_view_disabled:true
      ,duration: 2
      ,auto_blink: false
@@ -9243,7 +9243,7 @@ return one_handed_weapon_equipped(objs._model_index);
   })();
 
   if (!this.motion["PC combat default"]) {
-    this.motion["PC combat default"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　待機.vmd',
+    this.motion["PC combat default"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　待機.vmd',
       para: { adjust_center_view_disabled:true, loop_on_blending:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list:[0]
       }
@@ -9251,7 +9251,7 @@ return one_handed_weapon_equipped(objs._model_index);
     NPC_motion_list.push("PC combat default");
   }
   if (!this.motion["PC combat movement forward"]) {
-    this.motion["PC combat movement forward"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き前進.vmd',
+    this.motion["PC combat movement forward"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き前進.vmd',
       para: { adjust_center_view_disabled:true, loop_on_blending:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,PC_parry_level: 3
@@ -9260,7 +9260,7 @@ return one_handed_weapon_equipped(objs._model_index);
     NPC_motion_list.push("PC combat movement forward");
   }
   if (!this.motion["PC combat movement backward"]) {
-    this.motion["PC combat movement backward"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩きバック.vmd',
+    this.motion["PC combat movement backward"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩きバック.vmd',
       para: { adjust_center_view_disabled:true, loop_on_blending:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,PC_parry_level: 3
@@ -9269,7 +9269,7 @@ return one_handed_weapon_equipped(objs._model_index);
     NPC_motion_list.push("PC combat movement backward");
   }
   if (!this.motion["PC combat movement left"]) {
-    this.motion["PC combat movement left"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き左.vmd',
+    this.motion["PC combat movement left"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き左.vmd',
       para: { adjust_center_view_disabled:true, loop_on_blending:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,PC_parry_level: 3
@@ -9278,7 +9278,7 @@ return one_handed_weapon_equipped(objs._model_index);
     NPC_motion_list.push("PC combat movement left");
   }
   if (!this.motion["PC combat movement right"]) {
-    this.motion["PC combat movement right"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き右.vmd',
+    this.motion["PC combat movement right"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　構え歩き右.vmd',
       para: { adjust_center_view_disabled:true, loop_on_blending:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,PC_parry_level: 3
@@ -9287,7 +9287,7 @@ return one_handed_weapon_equipped(objs._model_index);
     NPC_motion_list.push("PC combat movement right");
   }
   if (!this.motion["PC combat parry"]) {
-    this.motion["PC combat parry"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　ガード.vmd',
+    this.motion["PC combat parry"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　ガード.vmd',
       para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,duration: 1
        ,PC_parry_level: 3
@@ -9295,7 +9295,7 @@ return one_handed_weapon_equipped(objs._model_index);
     };
   }
   if (!this.motion["PC combat parrying"]) {
-    this.motion["PC combat parrying"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　ガードヒット.vmd',
+    this.motion["PC combat parrying"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　ガードヒット.vmd',
       para: { adjust_center_view_disabled:true
        ,PC_parry_level: 3
        ,motion_command_disabled: true
@@ -9316,7 +9316,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat parrying");
   }
   if (!this.motion["PC combat parry broken"]) {
-    this.motion["PC combat parry broken"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション２．１\\ktntk-albert-2.1\\Albert-guard-broken.vmd',
+    this.motion["PC combat parry broken"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション２．１\\ktntk-albert-2.1\\Albert-guard-broken.vmd',
       para: { adjust_center_view_disabled:true
        ,motion_command_disabled: true
        ,model_index_list:[0], NPC_turns_to_you:true
@@ -9336,7 +9336,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat parry broken");
   }
   if (!this.motion["PC combat hit small"]) {
-    this.motion["PC combat hit small"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\怯み弱.vmd',
+    this.motion["PC combat hit small"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\怯み弱.vmd',
       para: { adjust_center_view_disabled:true
        ,adjustment_per_model: {
   _default_ : {
@@ -9366,7 +9366,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat hit small");
   }
   if (!this.motion["PC combat hit medium"]) {
-    this.motion["PC combat hit medium"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\怯み中.vmd',
+    this.motion["PC combat hit medium"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\怯み中.vmd',
       para: { adjust_center_view_disabled:true
        ,bone_to_position: [{ name:"全ての親" }]
        ,adjustment_per_model: {
@@ -9400,7 +9400,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat hit medium");
   }
   if (!this.motion["PC combat hit down"]) {
-    this.motion["PC combat hit down"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\ふっとび　全親無し.vmd',
+    this.motion["PC combat hit down"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\ふっとび　全親無し.vmd',
       para: { adjust_center_view_disabled:true
        ,duration: 2
        ,auto_blink: false
@@ -9470,7 +9470,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat hit down");
   }
   if (!this.motion["PC combat get up"]) {
-    this.motion["PC combat get up"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\起き上がり.vmd',
+    this.motion["PC combat get up"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\起き上がり.vmd',
       para: { adjust_center_view_disabled:true
        ,motion_command_disabled: true
        ,super_armor: { level:99 }
@@ -9520,7 +9520,7 @@ MMD_SA._force_motion_shuffle = true
     NPC_motion_list.push("PC combat get up");
   }
   if (!this.motion["PC combat victory"]) {
-    this.motion["PC combat victory"] = { path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\emote\\happy1.vmd',
+    this.motion["PC combat victory"] = { path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\emote\\happy1.vmd',
       para: { adjust_center_view_disabled:true
        ,motion_command_disabled: true
        ,onended: function (natural_end) {
@@ -9538,7 +9538,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 01"]) {
     this.motion["PC combat attack 01"] = {
 //+8,5,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\ともみ【3RP LK LP】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\ともみ【3RP LK LP】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9562,7 +9562,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 02"]) {
     this.motion["PC combat attack 02"] = {
 //4,4,4,5
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\RED白【鬼哭連脚】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\RED白【鬼哭連脚】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.25*30} }]
@@ -9598,7 +9598,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 03"]) {
     this.motion["PC combat attack 03"] = {
 //7,7,8
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\RED黒【鬼哭連拳】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\RED黒【鬼哭連拳】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9621,7 +9621,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 04"]) {
     this.motion["PC combat attack 04"] = {
 //45,45
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\まこと【立ち中K-中K】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\まこと【立ち中K-中K】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9649,7 +9649,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 05"]) {
     this.motion["PC combat attack 05"] = {
 //5,5,4,6
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【LF～ストンピングダブルニー～左構え】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【LF～ストンピングダブルニー～左構え】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }, { name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9683,7 +9683,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 06"]) {
     this.motion["PC combat attack 06"] = {
 //5,4,5,6
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【RF~アサルトラッシュ～ブルーサンダー～RF】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【RF~アサルトラッシュ～ブルーサンダー～RF】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.25*30} }]
@@ -9720,7 +9720,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 07"]) {
     this.motion["PC combat attack 07"] = {
 //+8,7,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【RF～マッハコンビネーション】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【RF～マッハコンビネーション】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }, { name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9750,7 +9750,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 08"]) {
     this.motion["PC combat attack 08"] = {
 //45,56
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ステップキックソバット～LF】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ステップキックソバット～LF】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }, { name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9779,7 +9779,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 09"]) {
     this.motion["PC combat attack 09"] = {
 //+4,8,8,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ブラストコンビネーション】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ブラストコンビネーション】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }, { name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9811,7 +9811,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 10"]) {
     this.motion["PC combat attack 10"] = {
 //8,7,7,5
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ラピッドフィストロー～RF】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\千早【左構え～ラピッドフィストロー～RF】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }, { name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9843,7 +9843,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 11"]) {
     this.motion["PC combat attack 11"] = {
 //456
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\日高舞『踵斧』.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\日高舞『踵斧』.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
 //       ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.05*30} }]
@@ -9874,7 +9874,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 12"]) {
     this.motion["PC combat attack 12"] = {
 //7,8,7,8,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\狂気フラン【TC-弱P弱P中P強P強P】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\狂気フラン【TC-弱P弱P中P強P強P】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:1,y:0,z:0} }]
@@ -9908,7 +9908,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 13"]) {
     this.motion["PC combat attack 13"] = {
 //4,7,8
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\東豪寺麗華【修羅覇王靠華山】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\東豪寺麗華【修羅覇王靠華山】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9931,7 +9931,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 14"]) {
     this.motion["PC combat attack 14"] = {
 //+7,5,6
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\美心【背向け-RPRKWK-ダークナイトコンビネーション】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\美心【背向け-RPRKWK-ダークナイトコンビネーション】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9954,7 +9954,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 15"]) {
     this.motion["PC combat attack 15"] = {
 //78,78,8,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\渋谷凛【サラマンダーコンビネーション】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\渋谷凛【サラマンダーコンビネーション】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -9980,7 +9980,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 16"]) {
     this.motion["PC combat attack 16"] = {
 //+7,7,8,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\渋谷凛【フラッシュアサルトコンボ-ターンイン-ボディストレート】.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\FIGHT - モコキッカーのクソモーション詰め合わせ★13杯\\+-+-+通常、必殺技BOX\\渋谷凛【フラッシュアサルトコンボ-ターンイン-ボディストレート】.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"センター", scale:{x:0,y:0,z:1} }]
@@ -10006,7 +10006,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 17"]) {
     this.motion["PC combat attack 17"] = {
 //8,8,7,6
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　基本攻撃.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\攻撃配布用\\咲夜　基本攻撃.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.25*30} }]
@@ -10031,7 +10031,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 18"]) {
     this.motion["PC combat attack 18"] = {
 //+4,5,8,9
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション\\格闘簡易作成用モーション\\Albert-combo6.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション\\格闘簡易作成用モーション\\Albert-combo6.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.5*30} }]
@@ -10056,7 +10056,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 19"]) {
     this.motion["PC combat attack 19"] = {
 //56,56
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション\\格闘簡易作成用モーション\\Albert-somersault-kick.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\格闘簡易作成用モーション\\格闘シーン簡易作成用モーション\\格闘簡易作成用モーション\\Albert-somersault-kick.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,mov_speed: [{ frame:0, speed:{x:0, y:0, z: 0.25*30} }]
@@ -10074,7 +10074,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
 
   if (!this.motion["PC combat attack 2-handed weapon 01"]) {
     this.motion["PC combat attack 2-handed weapon 01"] = {
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション３\\ナイトミク\\k.miku-2hand-Claymore（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション３\\ナイトミク\\k.miku-2hand-Claymore（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10096,7 +10096,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 01"]) {
     this.motion["PC combat attack twin weapon 01"] = {
 // 2,2
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-handaxe1（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-handaxe1（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10120,7 +10120,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 02"]) {
     this.motion["PC combat attack twin weapon 02"] = {
 // 2,1
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-handaxe2（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-handaxe2（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10145,7 +10145,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 03"]) {
     this.motion["PC combat attack twin weapon 03"] = {
 // 12,12
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-longsword1（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-longsword1（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10169,7 +10169,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 04"]) {
     this.motion["PC combat attack twin weapon 04"] = {
 // 23,23
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-longsword2（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-longsword2（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10188,7 +10188,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 05"]) {
     this.motion["PC combat attack twin weapon 05"] = {
 // +2,2
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-rapier1（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-rapier1（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10212,7 +10212,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 06"]) {
     this.motion["PC combat attack twin weapon 06"] = {
 // +23,23
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-rapier2（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-rapier2（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10231,7 +10231,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 07"]) {
     this.motion["PC combat attack twin weapon 07"] = {
 // 1,2
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-scimitar1（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-scimitar1（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10258,7 +10258,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack twin weapon 08"]) {
     this.motion["PC combat attack twin weapon 08"] = {
 // 123
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-scimitar2（全親追従）.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション４\\astora\\2sword\\astora-2sword-scimitar2（全親追従）.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10278,7 +10278,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 1-handed weapon 01"]) {
     this.motion["PC combat attack 1-handed weapon 01"] = {
 // 1,2
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack3_v01.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack3_v01.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10304,7 +10304,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 1-handed weapon 02"]) {
     this.motion["PC combat attack 1-handed weapon 02"] = {
 // 12,12
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack9-10_v01.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack9-10_v01.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]
@@ -10333,7 +10333,7 @@ MMD_SA_options.Dungeon.character.combat_mode = false
   if (!this.motion["PC combat attack 1-handed weapon 03"]) {
     this.motion["PC combat attack 1-handed weapon 03"] = {
 // 12,2
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack8-10_v01.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\粗製のモーション５\\astorias\\astora-astorias-attack8-10_v01.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
        ,model_index_list: [0]
        ,bone_to_position: [{ name:"全ての親", scale:{x:1,y:0,z:1} }]

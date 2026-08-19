@@ -354,7 +354,7 @@ return function (model) {
   }
 // ,morph_filter: { test: function (name) { return (name.indexOf("照れ") == -1) } }
  ,rigid_filter: /./
- ,icon_path: Settings.f_path + '\\images\\_ma_01_icon_64x64.png'
+ ,icon_path: Settings.f_path + '\\assets\\images\\_ma_01_icon_64x64.png'
    }
 
    ,"_MissFoo_v09b_for_SA-CLEANED.pmx": {
@@ -385,7 +385,7 @@ return function (model) {
 
 // ,rigid_filter: /^DISABLED$/
 // ,motion_name_default: "standby"
-// ,icon_path: Settings.f_path + '\\images\\_miss_noodle_01_icon_64x64.png'
+// ,icon_path: Settings.f_path + '\\assets\\images\\_miss_noodle_01_icon_64x64.png'
     }
 
     ,"天海春香セーラームーン.pmx" : {
@@ -418,7 +418,7 @@ return function (model) {
 // ,"hairshadow": { renderDepth:0 }
 // ,"cheek": { renderDepth:0 }
   }
- ,icon_path: Settings.f_path + '\\images\\_meiko_icon_64x64.png'
+ ,icon_path: Settings.f_path + '\\assets\\images\\_meiko_icon_64x64.png'
  ,boundingBox: { min: {x:-3.7866, y:-0.032, z:-0.641}, max: {x:3.7866, y:20.9321, z:1.1595} }
     }
 
@@ -599,7 +599,7 @@ return function (model) {
  ,rigid_filter: /^DISABLED$/
 //{ test: function (v) { return (v.indexOf("シャツ") == -1); } }
 // ,edgeScale: 0
- ,icon_path: Settings.f_path + '\\images\\_sauwai_icon_64x64.png'
+ ,icon_path: Settings.f_path + '\\assets\\images\\_sauwai_icon_64x64.png'
     }
 
    ,"モードレッド・ペンドラゴン（私服）Ver0.93.pmx": {
@@ -666,7 +666,7 @@ return function (model) {
   }
  ,rigid_filter: { test: function (v) { return (v.indexOf("スカート") == -1); } }
 // ,edgeScale: 0
- ,icon_path: Settings.f_path + '\\images\\_sauwai_icon_64x64.png'
+ ,icon_path: Settings.f_path + '\\assets\\images\\_sauwai_icon_64x64.png'
     }
 
    ,"十六夜咲夜Ver2.10_Type-S(ダンス_チャイナドレス-ミニ_ハイヒールサンダル).pmx" : {
@@ -2619,7 +2619,7 @@ MMD_SA_options.Dungeon.run_event()
   }
  ,item_base: {
     "batlogo": {
-      icon_path: System.Gadget.path + '\\images\\_dungeon\\phonograph-icon_64x64.png'
+      icon_path: System.Gadget.path + '\\assets\\images\\_dungeon\\phonograph-icon_64x64.png'
      ,info_short: "??????"
      ,stock_max: 1
      ,stock_default: 1
@@ -2634,7 +2634,7 @@ MMD_SA_options.Dungeon.run_event("jukebox")
 /*
  ,item_base: {
     "batlogo": {
-      icon_path: Settings.f_path + '\\images\\batman-logo-64x64.png'
+      icon_path: Settings.f_path + '\\assets\\images\\batman-logo-64x64.png'
      ,info_short: "????"
      ,stock_max: 1
      ,stock_default: 1

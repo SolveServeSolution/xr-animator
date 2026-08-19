@@ -107,7 +107,7 @@ if (xul_mode) {
 }
 else {
   var html = Silverlight.createObject(
-	toFileProtocol(System.Gadget.path) + "/js/SA_silverlight.xml",
+	toFileProtocol(System.Gadget.path) + "/platform/SA_silverlight.xml",
 	null, "SL",
 	paras,
 	{ onError: onSLError, onLoad: onSLLoad },
@@ -156,7 +156,7 @@ function SL_XUL_onload() {
   w.SL_DragOver = function () { SL_Host_Parent.style.zIndex=0 }
 
   var html = w.Silverlight.createObject(
-	toFileProtocol(System.Gadget.path) + "/js/SA_silverlight.xml",
+	toFileProtocol(System.Gadget.path) + "/platform/SA_silverlight.xml",
 	null, "SL",
 	SL_xul_paras,
 	{ onError: onSLError, onLoad: onSLLoad },

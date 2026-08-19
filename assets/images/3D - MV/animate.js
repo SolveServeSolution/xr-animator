@@ -7,4 +7,4 @@ Settings_default._custom_.UpdateInterval = "1"
 Settings_default._custom_.Display = "-1"
 Settings_default._custom_.UseAudioFFT = "non_default"
 
-document.write('<script type="text/javascript" language="javascript" src="js/SV3D/core.js"></scr'+'ipt>\n');
+document.write('<script type="text/javascript" language="javascript" src="mocap/SV3D/core.js"></scr'+'ipt>\n');

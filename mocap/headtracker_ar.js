@@ -134,7 +134,7 @@ Lbody3D_camera.appendChild(d)
 
 this.htracker = new headtrackr.Tracker({
   ui: false
- ,altVideo: {mp4:"js/headtrackr.mp4"}
+ ,altVideo: {mp4:"mocap/headtrackr.mp4"}
  ,detectionInterval: 50
  ,calcAngles: true
 });

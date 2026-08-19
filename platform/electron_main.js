@@ -880,7 +880,7 @@ global.path_demo = (function () {
 
       path_demo_by_url = {}
       for (var demo_name in path_demo) {
-        path_demo[demo_name] = toLocalPath(SA_path + '\\images\\' + path_demo[demo_name])
+        path_demo[demo_name] = toLocalPath(SA_path + '\\assets\\images\\' + path_demo[demo_name])
         path_demo_by_url[path_demo[demo_name]] = demo_name
       }
     }

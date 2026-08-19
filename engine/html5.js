@@ -1149,19 +1149,19 @@ DEBUG_show('Use HTML5 Canvas' + ((SL_info.length) ? '(' + SL_info.join('/') + ')
     WebGL_2D_options.use_Shadertoy = true
     if (Settings.UseCanvasNotebookDrawings) {
       WebGL_2D_options.use_NotebookDrawings = true
-      WebGL_2D_options.texture_list = [System.Gadget.path + '\\images\\ST_tex16.png']
+      WebGL_2D_options.texture_list = [System.Gadget.path + '\\assets\\images\\ST_tex16.png']
       WebGL_2D_options.SampNum_min = 8
       WebGL_2D_options.SampNum_max = 16
     }
     else if (Settings.UseCanvasWatercolor) {
       WebGL_2D_options.use_Watercolor = true
-      WebGL_2D_options.texture_list = [System.Gadget.path + '\\images\\ST_tex16.png', System.Gadget.path + '\\images\\ST_tex02.jpg']
+      WebGL_2D_options.texture_list = [System.Gadget.path + '\\assets\\images\\ST_tex16.png', System.Gadget.path + '\\assets\\images\\ST_tex02.jpg']
       WebGL_2D_options.SampNum_min = 16
       WebGL_2D_options.SampNum_max = 24
     }
     else if (Settings.UseCanvasVanGogh) {
       WebGL_2D_options.use_VanGogh = true
-      WebGL_2D_options.texture_list = [System.Gadget.path + '\\images\\ST_tex16.png', System.Gadget.path + '\\images\\ST_tex19.png']
+      WebGL_2D_options.texture_list = [System.Gadget.path + '\\assets\\images\\ST_tex16.png', System.Gadget.path + '\\assets\\images\\ST_tex19.png']
       WebGL_2D_options.SampNum_min = 12
       WebGL_2D_options.SampNum_max = 16
     }

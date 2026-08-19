@@ -278,33 +278,33 @@ var isMouseDown = false;
 EQP_Fireworks.icon_set = { icon:[], icon_custom_index:5, imgs:[], _imgs_cache:{} }
 
 EQP_Fireworks.icon_set.icon[0] = [
-  { path:System.Gadget.path + "\\images\\_fireworks\\fireworks_electric.png", opacity:1.0, EQ_range:[0,4] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_spark.png",    opacity:0.9, EQ_range:[5,10] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_star.png",     opacity:0.9, EQ_range:[11,15] }
+  { path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_electric.png", opacity:1.0, EQ_range:[0,4] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_spark.png",    opacity:0.9, EQ_range:[5,10] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_star.png",     opacity:0.9, EQ_range:[11,15] }
 ]
 
 EQP_Fireworks.icon_set.icon[1] = [
-  { path:System.Gadget.path + "\\images\\_fireworks\\fireworks_music_red.png",   opacity:0.8, EQ_range:[0,4] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_music_green.png", opacity:0.8, EQ_range:[5,10] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_music_blue.png",  opacity:0.8, EQ_range:[11,15] }
+  { path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_music_red.png",   opacity:0.8, EQ_range:[0,4] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_music_green.png", opacity:0.8, EQ_range:[5,10] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_music_blue.png",  opacity:0.8, EQ_range:[11,15] }
 ]
 
 EQP_Fireworks.icon_set.icon[2] = [
-  { path:System.Gadget.path + "\\images\\_fireworks\\fireworks_star_red.png",   opacity:0.75, EQ_range:[0,4] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_star_green.png", opacity:0.75, EQ_range:[5,10] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_star_blue.png",  opacity:0.75, EQ_range:[11,15] }
+  { path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_star_red.png",   opacity:0.75, EQ_range:[0,4] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_star_green.png", opacity:0.75, EQ_range:[5,10] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_star_blue.png",  opacity:0.75, EQ_range:[11,15] }
 ]
 
 EQP_Fireworks.icon_set.icon[3] = [
-  { path:System.Gadget.path + "\\images\\_fireworks\\fireworks_heart_green.png", opacity:2/3, EQ_range:[0,4-1] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_heart_red.png",   opacity:2/3, EQ_range:[5-1,10+1] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_heart_blue.png",  opacity:2/3, EQ_range:[11+1,15] }
+  { path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_heart_green.png", opacity:2/3, EQ_range:[0,4-1] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_heart_red.png",   opacity:2/3, EQ_range:[5-1,10+1] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_heart_blue.png",  opacity:2/3, EQ_range:[11+1,15] }
 ]
 
 EQP_Fireworks.icon_set.icon[4] = [
-  { path:System.Gadget.path + "\\images\\_fireworks\\fireworks_electric_red.png", opacity:0.9, EQ_range:[0,4] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_spark.png",        opacity:1.0, EQ_range:[5,10] }
- ,{ path:System.Gadget.path + "\\images\\_fireworks\\fireworks_electric.png",     opacity:0.9, EQ_range:[11,15] }
+  { path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_electric_red.png", opacity:0.9, EQ_range:[0,4] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_spark.png",        opacity:1.0, EQ_range:[5,10] }
+ ,{ path:System.Gadget.path + "\\assets\\images\\_fireworks\\fireworks_electric.png",     opacity:0.9, EQ_range:[11,15] }
 ]
 
 EQP_Fireworks.icon_index = EQP_Fireworks.icon || 0

@@ -33,7 +33,14 @@ var ie9_native = /Trident.[5-9]/i.test(navigator.userAgent)
 document.write('<script type="text/javascript" language="javascript" src="engine/SA_system_emulation_ext.js"></scr'+'ipt>\n')
 if (!self.System) {
   use_SA_system_emulation = true
-  document.write('<script type="text/javascript" language="javascript" src="' + ((localhost_mode || (webkit_electron_mode && /AT_SystemAnimator_v0001\.gadget/.test(toLocalPath(self.location.href).replace(/[\/\\][^\/\\]+$/, "")))) ? "_private/engine/SA_system_emulation.js" : "engine/SA_system_emulation.min.js") + '"></scr'+'ipt>\n')
+  if (browser_native_mode) {
+    document.write('<script>var _sa_alert=window.alert;window.alert=function(){}</scr'+'ipt>\n')
+    document.write('<script type="text/javascript" language="javascript" src="engine/SA_system_emulation.min.js"></scr'+'ipt>\n')
+    document.write('<script>window.alert=_sa_alert</scr'+'ipt>\n')
+  }
+  else {
+    document.write('<script type="text/javascript" language="javascript" src="' + ((localhost_mode || (webkit_electron_mode && /AT_SystemAnimator_v0001\.gadget/.test(toLocalPath(self.location.href).replace(/[\/\\][^\/\\]+$/, "")))) ? "_private/engine/SA_system_emulation.js" : "engine/SA_system_emulation.min.js") + '"></scr'+'ipt>\n')
+  }
 }
 if (WallpaperEngine_CEF_mode && !browser_native_mode) {
   document.write('<script src="engine/settings_WE.js"></scr'+'ipt>\n')
@@ -54,7 +61,7 @@ function SA_load_scripts() {
     path_demo = path_demo_obj.path_demo
     path_demo_by_url = path_demo_obj.path_demo_by_url
   }
-  else {
+  else if (!browser_native_mode) {
     try {
       var file = FSO_OBJ.OpenTextFile(System.Gadget.path + '\\engine\\path_demo.json', 1);
       path_demo = JSON.parse(file.ReadAll())
@@ -67,7 +74,27 @@ function SA_load_scripts() {
 
     path_demo_by_url = {}
     for (var demo_name in path_demo) {
-      path_demo[demo_name] = System.Gadget.path + toLocalPath('\\images\\' + path_demo[demo_name])
+      path_demo[demo_name] = System.Gadget.path + toLocalPath('\\assets\\images\\' + path_demo[demo_name])
+      path_demo_by_url[path_demo[demo_name]] = demo_name
+    }
+  }
+  else {
+    try {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', System.Gadget.path + '/engine/path_demo.json', false)
+      xhr.send()
+      if (xhr.status === 200 || xhr.status === 0)
+        path_demo = JSON.parse(xhr.responseText)
+      else
+        path_demo = {}
+    }
+    catch (err) {
+      path_demo = {}
+    }
+
+    path_demo_by_url = {}
+    for (var demo_name in path_demo) {
+      path_demo[demo_name] = System.Gadget.path + '/assets/images/' + path_demo[demo_name]
       path_demo_by_url[path_demo[demo_name]] = demo_name
     }
   }
@@ -203,6 +230,11 @@ function SA_load_scripts() {
     if (SA_HTA_folder) {
 SA_HTA_folder = toLocalPath(SA_HTA_folder)
 var SA_HTA_folder_full = SA_HTA_folder
+
+if (browser_native_mode) {
+  SA_HTA_folder_parent = SA_HTA_folder.replace(/[\/\\][^\/\\]+$/, "")
+}
+else {
 var isFile = System.Shell.itemFromPath(SA_HTA_folder).isFileSystem
 if (isFile) {
   SA_HTA_folder = SA_HTA_folder.replace(/[\/\\][^\/\\]+$/, "")
@@ -218,6 +250,7 @@ if (FSO_OBJ.FileExists(p_js)) {
     file.Close()
   }
   catch (err) {console.log(err)}
+}
 }
 if (!SA_project_JSON)
   SA_project_JSON = {}

@@ -10,7 +10,7 @@
  * License: MIT License
  */
 
-var DEFAULT_FACEDEF_DIR = System.Gadget.path + "\\images\\MacFace01.mcface";
+var DEFAULT_FACEDEF_DIR = System.Gadget.path + "\\assets\\images\\MacFace01.mcface";
 var EV_width = 128
 var EV_height = 128
 

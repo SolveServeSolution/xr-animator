@@ -15,7 +15,7 @@ this.initialized = true
 this.fadeout_canvas = document.createElement("canvas")
 /*
 this.fadeout_dummy = new Image()
-this.fadeout_dummy.src = toFileProtocol(System.Gadget.path + '\\images\\laughing_man_134x120.png')
+this.fadeout_dummy.src = toFileProtocol(System.Gadget.path + '\\assets\\images\\laughing_man_134x120.png')
 */
 
 var c_host = (returnBoolean("CSSTransform3DDisabledForContent")) ? document.getElementById("Lbody_host") : document.getElementById("Lbody")
@@ -6961,7 +6961,7 @@ window.addEventListener("jThree_ready",() => {
 if (webkit_electron_mode&& MMD_SA_options.Dungeon_options) {
   MMD_SA_options.Dungeon.motion["PC Power Up"] = {
 //456
-      path:'MMD.js\\motion\\motion_rpg_pack01.zip#\\misc\\this_is_power.vmd'
+      path:'assets\\models\\motion\\motion_rpg_pack01.zip#\\misc\\this_is_power.vmd'
      ,para: { adjust_center_view_disabled:true, onended: function () { MMD_SA._no_fading=true; }
  ,onstart: function () {
 MMD_SA_options.Dungeon.sound.audio_object_by_name["gura_reflect_op"].play()//THREE.MMD.getModels()[0].mesh)
@@ -17461,7 +17461,7 @@ MMD_SA_options.texture_resolution_limit=2048
   MMD_SA_options.model_path_default = MMD_SA_options.model_path = toLocalPath(MMD_SA_options.model_path)
 
 //  if (!MMD_SA_options.model_path)
-//    MMD_SA_options.model_path = 'MMD.js/model/m_GUMI/m_GUMI - standard bones.pmd'
+//    MMD_SA_options.model_path = 'assets/models/model/m_GUMI/m_GUMI - standard bones.pmd'
   var _model_path = LABEL_LoadSettings("LABEL_MMD_model_path", "")
   if (_model_path) {
     MMD_SA_options.model_path = _model_path

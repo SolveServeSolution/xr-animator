@@ -197,7 +197,7 @@ function Filter_draw() {
   if (use_MMG) {
     html +=
   '<div id="LMMG_parent" style="position:absolute; top:0px; left:0px; width:' + MMG_BG_width + 'px; height:' + MMG_BG_height + 'px; overflow:hidden; background-color:black">\n'
-+ '<img id="IMMG" style="position:absolute; top:0px; left:0px;' + ((!ie9_mode) ? 'filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)' : '') + '" src="plugins/filters/assets/images/empty.gif"/>\n'
++ '<img id="IMMG" style="position:absolute; top:0px; left:0px;' + ((!ie9_mode) ? 'filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)' : '') + '" src="plugins/filters/images/empty.gif"/>\n'
 + '</div>\n'
   }
 

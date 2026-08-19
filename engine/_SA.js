@@ -4387,7 +4387,7 @@ function BG_AddShadow(basic_mode) {
   BG_img_objs = []
 
 if (!basic_mode) {
-  var bg_shadow = BG.addImageObject("plugins/filters/assets/images/black.png", 0,0)
+  var bg_shadow = BG.addImageObject("plugins/filters/images/black.png", 0,0)
   bg_shadow.left = (w-100)/2
   bg_shadow.top = (h-100)/2
   bg_shadow.width = w
@@ -4427,7 +4427,7 @@ function BG_AddBlackhole() {
     BG_img_objs = []
 
     var bg_blackhole
-    var bg_choice = [Settings.f_path + toLocalPath('\\images\\bg_blackhole.png'), System.Gadget.path + toLocalPath('\\js_filters\\images\\bg_blackhole_' + EV_width + 'x' + EV_height + '.png')]
+    var bg_choice = [Settings.f_path + toLocalPath('\\images\\bg_blackhole.png'), System.Gadget.path + toLocalPath('\\plugins\\filters\\images\\bg_blackhole_' + EV_width + 'x' + EV_height + '.png')]
     for (var i = 0; i < bg_choice.length; i++) {
       var bg_src = ValidatePath(bg_choice[i])
       if (bg_src) {
@@ -4436,7 +4436,7 @@ function BG_AddBlackhole() {
       }
     }
     if (!bg_blackhole)
-      bg_blackhole = 'plugins/filters/assets/images/bg_blackhole_130x130.png'
+      bg_blackhole = 'plugins/filters/images/bg_blackhole_130x130.png'
 
     BG_img_objs.push(BG.addImageObject(bg_blackhole, 0,0))
 

@@ -1,0 +1,357 @@
+:root {
+  --bg: rgba(15, 15, 20, 0.85);
+  --bg-hover: rgba(255, 255, 255, 0.08);
+  --bg-active: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #e8e8ec;
+  --text-muted: #8b8b96;
+  --accent: #6c8cff;
+  --accent-hover: #8aa4ff;
+  --danger: #ff6b6b;
+  --success: #4ecdc4;
+  --warning: #ffd166;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+#xra-ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99999;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+#xra-ui * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#xra-ui button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ====== TOP BAR ====== */
+.xra-topbar {
+  pointer-events: auto;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+}
+
+.xra-topbar button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.xra-topbar button:hover {
+  background: var(--bg-hover);
+}
+
+.xra-topbar button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.xra-topbar button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ====== PANELS ====== */
+.xra-panel {
+  pointer-events: auto;
+  position: absolute;
+  width: 280px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: none;
+}
+
+.xra-panel.open {
+  display: block;
+}
+
+.xra-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* ====== MOCAP PANEL (bottom-left) ====== */
+#xra-mocap-panel {
+  bottom: 16px;
+  left: 16px;
+}
+
+.xra-mocap-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.xra-mocap-modes button {
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.xra-mocap-modes button:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+.xra-mocap-modes button.selected {
+  background: rgba(108, 140, 255, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.xra-record-section {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.xra-record-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+}
+
+.xra-record-btn:hover {
+  background: var(--bg-hover);
+}
+
+.xra-record-btn.recording {
+  background: rgba(255, 107, 107, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+  animation: xra-pulse 1.5s ease infinite;
+}
+
+@keyframes xra-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.xra-record-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.xra-speed-select {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-family: inherit;
+}
+
+/* ====== EXPORT PANEL (bottom-right) ====== */
+#xra-export-panel {
+  bottom: 16px;
+  right: 16px;
+}
+
+.xra-export-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.xra-export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.xra-export-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+.xra-export-btn .label {
+  font-weight: 500;
+}
+
+.xra-export-btn .hint {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.xra-export-btn .badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(108, 140, 255, 0.15);
+  color: var(--accent);
+}
+
+.xra-export-btn.saving .badge {
+  background: rgba(255, 209, 102, 0.15);
+  color: var(--warning);
+}
+
+.xra-export-btn.done .badge {
+  background: rgba(78, 205, 196, 0.15);
+  color: var(--success);
+}
+
+/* ====== STATUS BAR (bottom-center) ====== */
+.xra-status {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  backdrop-filter: blur(20px);
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.xra-status.visible {
+  opacity: 1;
+}
+
+.xra-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.xra-status-dot.inactive {
+  background: var(--text-muted);
+}
+
+/* ====== LOAD PANEL (top, dropdown from topbar) ====== */
+#xra-load-panel {
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+}
+
+.xra-drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  margin-bottom: 12px;
+}
+
+.xra-drop-zone.dragover {
+  border-color: var(--accent);
+  background: rgba(108, 140, 255, 0.05);
+  color: var(--accent);
+}
+
+.xra-drop-zone p {
+  margin-bottom: 8px;
+}
+
+.xra-drop-zone .or {
+  font-size: 11px;
+  margin: 8px 0;
+}
+
+.xra-file-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  transition: background 0.15s;
+}
+
+.xra-file-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 640px) {
+  .xra-topbar {
+    top: 8px;
+    padding: 3px;
+  }
+  .xra-topbar button span {
+    display: none;
+  }
+  .xra-panel {
+    width: calc(100vw - 32px);
+  }
+  #xra-mocap-panel, #xra-export-panel {
+    left: 16px;
+    right: 16px;
+  }
+}

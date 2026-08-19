@@ -85,7 +85,7 @@ if (use_HTML5) {
   var canvas = c_obj.canvas
 
   canvas['Canvas.ZIndex'] = 50
-  canvas.Source = toFileProtocol((bg.is_filter) ? System.Gadget.path + '\\images\\_bg_dummy\\EQF_bars_bg0.png' : bg.src)
+  canvas.Source = toFileProtocol((bg.is_filter) ? System.Gadget.path + '\\assets\\images\\_bg_dummy\\EQF_bars_bg0.png' : bg.src)
   canvas.Opacity = (bg.opacity) ? bg.opacity/100 : ((bg.is_filter) ? 0.5 : 1)
 
   img = ps.img_obj = canvas
@@ -131,7 +131,7 @@ else {
   else if (bg.is_filter) {
     xaml =
   '<Image xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="bg" '
-+ 'Canvas.ZIndex="50" Opacity="0.5" Stretch="Fill" Source="' + toFileProtocol(System.Gadget.path + '\\images\\_bg_dummy\\EQF_bars_bg0.png') + '">\n'
++ 'Canvas.ZIndex="50" Opacity="0.5" Stretch="Fill" Source="' + toFileProtocol(System.Gadget.path + '\\assets\\images\\_bg_dummy\\EQF_bars_bg0.png') + '">\n'
 + clip
 + '</Image>'
   }
@@ -1311,8 +1311,8 @@ if (self.EQ_Filter) {
     EV_height = 0
 
   _gallery_TEMP['EQ01'] = {
-   bg: {type:'bg',   z:0, use_Silverlight:use_Silverlight, w:EV_width, h:EV_height, src:System.Gadget.path + '\\images\\_bg_dummy\\EQF_bars_bg0_o66.png'}
-,imgs:[{type:'main', z:0, use_Silverlight:use_Silverlight, w:EV_width, h:EV_height, src:System.Gadget.path + '\\images\\_bg_dummy\\1x1.png'}]
+   bg: {type:'bg',   z:0, use_Silverlight:use_Silverlight, w:EV_width, h:EV_height, src:System.Gadget.path + '\\assets\\images\\_bg_dummy\\EQF_bars_bg0_o66.png'}
+,imgs:[{type:'main', z:0, use_Silverlight:use_Silverlight, w:EV_width, h:EV_height, src:System.Gadget.path + '\\assets\\images\\_bg_dummy\\1x1.png'}]
   }
 }
 else {
@@ -1699,7 +1699,7 @@ else
       if (EQP_use_HTML5_video) {
         if (!use_Silverlight) {
           if (bg_video == bg)
-            bg.src = System.Gadget.path + '\\images\\_bg_dummy\\EQF_bars_bg0_o50.png'
+            bg.src = System.Gadget.path + '\\assets\\images\\_bg_dummy\\EQF_bars_bg0_o50.png'
         }
 
         if (Canvas_Effect)
@@ -2665,7 +2665,7 @@ CANVAS_must_redraw = true
 
 if (self.EQP_video_options && EQP_video_options.overlay_video) {
   var ov = EQP_video_options.overlay_video
-  ov.src = System.Gadget.path + "\\images\\_bg_dummy\\1x1.png"
+  ov.src = System.Gadget.path + "\\assets\\images\\_bg_dummy\\1x1.png"
 
   ov.x_default = 0
   ov.y_default = 0
