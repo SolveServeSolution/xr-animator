@@ -251,7 +251,7 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
       var rotCurveNodeId = genId();
       var rotCurveIds = [genId(), genId(), genId()];
 
-      L('  AnimationCurveNode: ' + rotCurveNodeId + ', "AnimCurveNode::Lcl Rotation", "" {');
+      L('  AnimationCurveNode: ' + rotCurveNodeId + ', "AnimCurveNode::R", "" {');
       L('    Properties70:  {');
       L('      P: "d|X", "Number", "", "A",0');
       L('      P: "d|Y", "Number", "", "A",0');
@@ -303,7 +303,7 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
       var posCurveNodeId = genId();
       var posCurveIds = [genId(), genId(), genId()];
 
-      L('  AnimationCurveNode: ' + posCurveNodeId + ', "AnimCurveNode::Lcl Translation", "" {');
+      L('  AnimationCurveNode: ' + posCurveNodeId + ', "AnimCurveNode::T", "" {');
       L('    Properties70:  {');
       L('      P: "d|X", "Number", "", "A",0');
       L('      P: "d|Y", "Number", "", "A",0');
