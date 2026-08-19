@@ -207,6 +207,7 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
   // Model nodes (LimbNode)
   for (var bi = 0; bi < boneDataList.length; bi++) {
     var bd = boneDataList[bi];
+    var pos = bd.bone.position;
     L('  Model: ' + bd.modelId + ', "Model::' + bd.mixamoName + '", "LimbNode" {');
     L('    Version: 232');
     L('    Properties70:  {');
@@ -214,6 +215,7 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
     L('      P: "InheritType", "enum", "", "",1');
     L('      P: "ScalingMax", "Vector3D", "Vector", "",0,0,0');
     L('      P: "DefaultAttributeIndex", "int", "Integer", "",0');
+    L('      P: "Lcl Translation", "Lcl Translation", "", "A",' + pos.x + ',' + pos.y + ',' + pos.z);
     L('    }');
     L('    Shading: Y');
     L('    Culling: "CullingOff"');

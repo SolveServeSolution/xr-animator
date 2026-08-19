@@ -14153,7 +14153,6 @@ System._browser.save_file(filename+'.vrma', vrmaBuffer, 'application/octet-strea
           await init();
           await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/BVH_filewriter.js'));
           await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/FBX_mixamo_filewriter.js'));
-          await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/motion_loop_smoother.js'));
 
           let filename;
           let vmd = System._browser.camera.motion_recorder.vmd;
@@ -14171,7 +14170,6 @@ System._browser.save_file(filename+'.vrma', vrmaBuffer, 'application/octet-strea
           const clip = bvh.clip;
           const skeleton = bvh.skeleton;
 
-          Motion_Clip_SmoothLoopSeam(clip, seamSeconds);
           FBX_Mixamo_FileWriter(filename + '.fbx', clip, skeleton);
         };
       })(),
