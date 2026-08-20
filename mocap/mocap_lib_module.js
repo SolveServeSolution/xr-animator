@@ -394,11 +394,9 @@ estimatePoses: function (video, dummy, nowInMs) {
     for (let i = 0; i < 33; i++) {
       const v = c[i];
 
-//      const v3 = data_filter[0][p][i].filter([v.x, v.y, v.z], nowInMs);
-//      v.x = v3[0];
-//      v.y = v3[1];
-
-      const v3 = data_filter[0][p][i].filter([0, 0, v.z], nowInMs);
+      const v3 = data_filter[0][p][i].filter([v.x, v.y, v.z], nowInMs);
+      v.x = v3[0];
+      v.y = v3[1];
       v.z = v3[2];
    }
   }
