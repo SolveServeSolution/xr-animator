@@ -206,7 +206,6 @@ for (let f = 0; f < f_max; f++) {
 
         pos.multiplyScalar(pos_scale);
         pos.multiplyScalar(leg_scale);
-        pos.add(v2.fromArray(para.pos0['hips']).multiplyScalar(vrm_scale));
 
         v += pos.toArray().join(' ') + ' ';
 
