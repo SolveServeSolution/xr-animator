@@ -10630,12 +10630,12 @@ return [
         {
           func: function () {
 var filename;
-var vmd = System._browser.camera.motion_recorder.vmd;
-if (vmd) {
+var vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd;
+if (System._browser.camera.motion_recorder.vmd) {
   filename = 'motion_' + Date.now() + '.vmd';
 }
 else {
-  vmd = System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
+  vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
   filename = MMD_SA.MMD.motionManager.filename + '.vmd'
 }
 
@@ -10655,12 +10655,12 @@ setTimeout(()=>{
         {
           func: function () {
 var filename;
-var vmd = System._browser.camera.motion_recorder.vmd;
-if (vmd) {
+var vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd;
+if (System._browser.camera.motion_recorder.vmd) {
   filename = 'motion_' + Date.now() + '.glb';
 }
 else {
-  vmd = System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
+  vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
   filename = MMD_SA.MMD.motionManager.filename + '.glb'
 }
 
@@ -10677,12 +10677,12 @@ setTimeout(()=>{
         {
           func: function () {
 var filename;
-var vmd = System._browser.camera.motion_recorder.vmd;
-if (vmd) {
+var vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd;
+if (System._browser.camera.motion_recorder.vmd) {
   filename = 'motion_' + Date.now() + '.bvh';
 }
 else {
-  vmd = System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
+  vmd = window.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
   filename = MMD_SA.MMD.motionManager.filename + '.bvh'
 }
 

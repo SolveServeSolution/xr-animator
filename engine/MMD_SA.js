@@ -14115,13 +14115,13 @@ if (url_bvh) {
   bvh_txt = await response.text();
 }
 else  {
-  let vmd = System._browser.camera.motion_recorder.vmd;
-  if (vmd) {
+  let vmd = self.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd;
+  if (System._browser.camera.motion_recorder.vmd) {
     filename = 'motion_' + Date.now();
   }
   else {
     filename = MMD_SA.MMD.motionManager.filename;
-    vmd = MMD_SA.vmd_by_filename[filename];
+    vmd = self.XRA_trimmedVMD || MMD_SA.vmd_by_filename[filename];
   }
 
   await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/BVH_filewriter.js'));
@@ -14155,13 +14155,13 @@ System._browser.save_file(filename+'.vrma', vrmaBuffer, 'application/octet-strea
           await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/FBX_mixamo_filewriter.js'));
 
           let filename;
-          let vmd = System._browser.camera.motion_recorder.vmd;
-          if (vmd) {
+          let vmd = self.XRA_trimmedVMD || System._browser.camera.motion_recorder.vmd;
+          if (System._browser.camera.motion_recorder.vmd) {
             filename = 'motion_' + Date.now();
           }
           else {
             filename = MMD_SA.MMD.motionManager.filename;
-            vmd = MMD_SA.vmd_by_filename[filename];
+            vmd = self.XRA_trimmedVMD || MMD_SA.vmd_by_filename[filename];
           }
 
           const bvh_txt = BVH_FileWriter(null, vmd.boneKeys);
