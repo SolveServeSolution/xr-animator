@@ -10615,13 +10615,13 @@ if (/\.(bvh|fbx|glb|vrma)$/i.test(MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManage
   get content() {
 const vmd = System._browser.camera.motion_recorder.vmd || MMD_SA.vmd_by_filename[MMD_SA.MMD.motionManager.filename];
 const plus_expressions = (vmd.morphKeys.length) ? ' (+expressions)' : '';
-return System._browser.translation.get('XR_Animator.UI.motion_capture.ML_on.export_motion_to_file.choose_format') + '\n1. VMD' + plus_expressions + ((MMD_SA.THREEX.enabled) ? '\n2. glTF' + plus_expressions + '\n3. BVH\n4. VRMA\n5. FBX (Mixamo)' : '') + '\nX. ' + System._browser.translation.get('Misc.cancel');
-  } 
+return System._browser.translation.get('XR_Animator.UI.motion_capture.ML_on.export_motion_to_file.choose_format') + '\n1. VMD' + plus_expressions + ((MMD_SA.THREEX.enabled) ? '\n2. glTF' + plus_expressions + '\n3. BVH\n4. VRMA\n5. FBX (Mixamo)\n6. FBX (Mixamo, with root motion)' : '') + '\nX. ' + System._browser.translation.get('Misc.cancel');
+  }
  ,bubble_index: 3
  ,get branch_list() {
 return [
   { key:1, event_index:2 },
-  ...((MMD_SA.THREEX.enabled) ? [{ key:2, event_index:3 },{ key:3, event_index:4 },{ key:4, event_index:5 },{ key:5, event_index:6 }] : []),
+  ...((MMD_SA.THREEX.enabled) ? [{ key:2, event_index:3 },{ key:3, event_index:4 },{ key:4, event_index:5 },{ key:5, event_index:6 },{ key:6, event_index:7 }] : []),
   { key:'X', is_closing_event:true, event_index:99 },
 ];
   }
@@ -10712,6 +10712,16 @@ setTimeout(()=>{MMD_SA.THREEX.utils.export_VRMA();}, 0);
         {
           func: function () {
 setTimeout(()=>{MMD_SA.THREEX.utils.export_FBX_mixamo();}, 0);
+          }
+         ,message: {
+  content: 'Please wait while the file is being generated for saving.'
+ ,duration: 3
+          }
+         ,ended: true
+        },
+        {
+          func: function () {
+setTimeout(()=>{MMD_SA.THREEX.utils.export_FBX_mixamo(true);}, 0);
           }
          ,message: {
   content: 'Please wait while the file is being generated for saving.'
