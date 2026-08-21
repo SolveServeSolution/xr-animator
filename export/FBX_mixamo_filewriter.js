@@ -1,7 +1,7 @@
 // FBX ASCII 7.4 writer — exports a THREE.AnimationClip as a Mixamo-rigged FBX file.
 // Global function, no module exports.
 
-function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
+function FBX_Mixamo_FileWriter(filename, clip, skeleton, includeRootMotion) {
   // --- Thumb relabel correction ---
   // BVH_FileWriter renames thumbs like so:
   //   leftThumbProximal → leftThumbMetacarpal
@@ -298,8 +298,9 @@ function FBX_Mixamo_FileWriter(filename, clip, skeleton) {
       });
     }
 
-    // Position curves (root only)
-    if (bd.positionTrack && bd.isRoot) {
+    // Position curves (root only, opt-in - off by default so the model
+    // plays the animation in place without moving/sliding position)
+    if (includeRootMotion && bd.positionTrack && bd.isRoot) {
       var posCurveNodeId = genId();
       var posCurveIds = [genId(), genId(), genId()];
 

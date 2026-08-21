@@ -14149,7 +14149,7 @@ System._browser.save_file(filename+'.vrma', vrmaBuffer, 'application/octet-strea
           BVHLoader_inst = new module_bvh.BVHLoader();
         }
 
-        return async function (seamSeconds) {
+        return async function (includeRootMotion) {
           await init();
           await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/BVH_filewriter.js'));
           await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/FBX_mixamo_filewriter.js'));
@@ -14170,7 +14170,7 @@ System._browser.save_file(filename+'.vrma', vrmaBuffer, 'application/octet-strea
           const clip = bvh.clip;
           const skeleton = bvh.skeleton;
 
-          FBX_Mixamo_FileWriter(filename + '.fbx', clip, skeleton);
+          FBX_Mixamo_FileWriter(filename + '.fbx', clip, skeleton, includeRootMotion);
         };
       })(),
 
