@@ -13,9 +13,9 @@ let clipDuration = 0;
 let trimStart = 0, trimEnd = 0;
 let dragging = null;
 
-let previewMixer, previewAction, previewClip;
+let previewAction, previewClip;
 let lastVmdRef = null;
-let savedAnimationEnabled = null;
+let savedAnimState = null;
 let savedDetectorState = null;
 
 window.XRA_trimmedVMD = null;
@@ -32,12 +32,18 @@ function boneKeysDuration(vmd) {
   return max;
 }
 
-// --- Scrub preview: build a THREE.AnimationClip from the recorded
-// boneKeys via the same BVH_FileWriter + BVHLoader pipeline used for FBX
-// export (bone names already match the loaded VRM model's humanoid
-// skeleton at this stage - the mixamorig* renaming only happens later,
-// inside FBX_Mixamo_FileWriter), then drive a temporary AnimationMixer
-// bound to the live model so setTime() poses it directly.
+// --- Scrub preview ---
+// Build a THREE.AnimationClip from the recorded boneKeys via the same
+// BVH_FileWriter + BVHLoader pipeline used for FBX export, then inject it
+// into the MODEL'S OWN animation mixer (modelX.animation.mixer). This is
+// critical: the engine calls modelX.animation.mixer.update(delta) every
+// frame as part of its render loop (MMD_SA.js ~line 9437) but ONLY when
+// animation.enabled is true. A separate mixer would never get ticked by
+// the engine and its pose would be overwritten on the very next frame by
+// the engine's per-bone MMD copy loop (which runs when animation_enabled
+// is false). Using the model's mixer means our clip is applied every
+// frame automatically, and with animation_enabled=true + ML_enabled=false
+// the per-bone overwrite loop is skipped entirely.
 async function setupPreview(vmd) {
   teardownPreview();
 
@@ -49,16 +55,10 @@ async function setupPreview(vmd) {
     const bvh = loader.parse(bvh_txt);
 
     const modelX = MMD_SA.THREEX.get_model(0);
-    const target = modelX && modelX.model && modelX.model.scene;
-    if (!target) return;
+    if (!modelX) return;
 
-    // BVH track names are VRM humanoid bone names (e.g. "hips") - that's
-    // just a lookup key, not the scene's actual Object3D.name (e.g.
-    // "J_Bip_C_Hips" for a VRoid model). AnimationMixer binds tracks to
-    // scene nodes by exact name match via getObjectByName, so every track
-    // silently fails to bind unless we remap to the real bone name first,
-    // using the model's own vrm-name -> object-name reverse lookup (same
-    // map BVH_FileWriter itself builds from, just inverted).
+    // Remap BVH track names (VRM humanoid keys like "hips") to actual
+    // Object3D.name values in the scene (e.g. "J_Bip_C_Hips").
     const nameToObjectName = {};
     for (const objName in (modelX.bone_three_to_vrm_name || {})) {
       nameToObjectName[modelX.bone_three_to_vrm_name[objName]] = objName;
@@ -71,15 +71,33 @@ async function setupPreview(vmd) {
       if (realName) track.name = realName + prop;
     });
 
-    // The global `THREE` in this app is jThree's legacy r58 bundle (used for
-    // the MMD/PMX pipeline) and has no AnimationMixer - the VRM model and the
-    // BVH loader's clip are built with the modern three.js at
-    // MMD_SA.THREEX.THREE, so the mixer has to come from there too.
     previewClip = bvh.clip;
-    previewMixer = new MMD_SA.THREEX.THREE.AnimationMixer(target);
-    previewAction = previewMixer.clipAction(previewClip);
+
+    // Save current animation state and take over the model's mixer.
+    savedAnimState = {
+      wasEnabled: modelX.animation.enabled,
+      actionIndex: modelX.animation.action_index,
+      motionIndex: modelX.animation._motion_index,
+    };
+
+    // Ensure animation.enabled = true so the engine ticks the mixer.
+    if (!modelX.animation.enabled) {
+      modelX.animation.enabled = true;
+    }
+    // Stop whatever was playing (idle anim, etc.)
+    modelX.animation.mixer.stopAllAction();
+    // Prevent the engine's auto-toggle at MMD_SA.js:9386-9394 from
+    // flipping animation.enabled back off mid-trim.
+    modelX.animation._motion_index = null;
+
+    // Play our preview clip in paused mode — the mixer evaluates it at
+    // action.time every frame without auto-advancing.
+    previewAction = modelX.animation.mixer.clipAction(previewClip);
+    previewAction.clampWhenFinished = true;
+    previewAction.loop = MMD_SA.THREEX.THREE.LoopOnce;
     previewAction.play();
-    previewMixer.setTime(0);
+    previewAction.paused = true;
+    previewAction.time = 0;
   }
   catch (err) {
     console.error('[XRA Trim] preview setup failed', err);
@@ -87,15 +105,30 @@ async function setupPreview(vmd) {
 }
 
 function teardownPreview() {
-  if (previewMixer) {
-    previewMixer.stopAllAction();
-    previewMixer = previewAction = previewClip = null;
+  if (previewAction) {
+    try {
+      const modelX = MMD_SA.THREEX.get_model(0);
+      previewAction.stop();
+      modelX.animation.mixer.uncacheClip(previewClip);
+      modelX.animation.mixer.uncacheAction(previewClip);
+
+      if (savedAnimState) {
+        modelX.animation._motion_index = savedAnimState.motionIndex;
+        if (!savedAnimState.wasEnabled) {
+          modelX.animation.enabled = false;
+        } else if (savedAnimState.actionIndex >= 0) {
+          modelX.animation.play(savedAnimState.actionIndex);
+        }
+        savedAnimState = null;
+      }
+    } catch (err) {}
+    previewAction = previewClip = null;
   }
 }
 
 function scrubTo(t) {
-  if (!previewMixer) return;
-  previewMixer.setTime(Math.max(0, Math.min(t, clipDuration || 0.0001)));
+  if (!previewAction) return;
+  previewAction.time = Math.max(0, Math.min(t, clipDuration || 0.0001));
 }
 
 // --- Trim + apply ---
@@ -171,25 +204,11 @@ function open(vmd) {
   root.classList.add('open');
   render();
 
-  // Pause the model's own animation playback while the trim overlay is
-  // open, so it doesn't fight the preview mixer for control of the same
-  // bones every frame (both would otherwise write to the same skeleton).
-  try {
-    const modelX = MMD_SA.THREEX.get_model(0);
-    if (modelX && modelX.animation) {
-      savedAnimationEnabled = modelX.animation.enabled;
-      modelX.animation.enabled = false;
-    }
-  } catch (err) {}
-
-  // Also pause live webcam mocap. It writes straight to the same bones
-  // every render frame regardless of animation.enabled - with
-  // animation_enabled false, MMD_SA's per-bone update actually takes the
-  // "always apply live tracked rotation" branch, so the previewMixer's pose
-  // gets overwritten again on the very next frame unless the detectors feeding
-  // it are paused. camera.ML_enabled itself is a read-only getter derived from
-  // facemesh.enabled || poseNet.enabled (SA_system_emulation.min.js), so it
-  // can't be assigned directly - toggle the actual detector switches instead.
+  // Pause live webcam mocap so tracked rotations don't fight the preview.
+  // With animation_enabled=true (set inside setupPreview) and ML_enabled=false,
+  // the engine's per-bone MMD copy loop is skipped entirely — but we still
+  // need to disable the detectors so they don't write to the jThree MMD bones
+  // which would cause subtle drift if animation is re-enabled later.
   try {
     const camera = System._browser && System._browser.camera;
     if (camera) {
@@ -210,13 +229,6 @@ function open(vmd) {
 function close() {
   root.classList.remove('open');
   teardownPreview();
-
-  try {
-    if (savedAnimationEnabled !== null) {
-      MMD_SA.THREEX.get_model(0).animation.enabled = savedAnimationEnabled;
-      savedAnimationEnabled = null;
-    }
-  } catch (err) {}
 
   try {
     if (savedDetectorState) {
