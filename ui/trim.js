@@ -16,6 +16,7 @@ let dragging = null;
 let previewMixer, previewAction, previewClip;
 let lastVmdRef = null;
 let savedAnimationEnabled = null;
+let savedDetectorState = null;
 
 window.XRA_trimmedVMD = null;
 
@@ -177,6 +178,28 @@ function open(vmd) {
     }
   } catch (err) {}
 
+  // Also pause live webcam mocap. It writes straight to the same bones
+  // every render frame regardless of animation.enabled - with
+  // animation_enabled false, MMD_SA's per-bone update actually takes the
+  // "always apply live tracked rotation" branch, so the previewMixer's pose
+  // gets overwritten again on the very next frame unless the detectors feeding
+  // it are paused. camera.ML_enabled itself is a read-only getter derived from
+  // facemesh.enabled || poseNet.enabled (SA_system_emulation.min.js), so it
+  // can't be assigned directly - toggle the actual detector switches instead.
+  try {
+    const camera = System._browser && System._browser.camera;
+    if (camera) {
+      savedDetectorState = {
+        poseNet: camera.poseNet && camera.poseNet.enabled,
+        facemesh: camera.facemesh && camera.facemesh.enabled,
+        handpose: camera.handpose && camera.handpose.enabled,
+      };
+      if (camera.poseNet) camera.poseNet.enabled = false;
+      if (camera.facemesh) camera.facemesh.enabled = false;
+      if (camera.handpose) camera.handpose.enabled = false;
+    }
+  } catch (err) {}
+
   setupPreview(vmd);
 }
 
@@ -188,6 +211,16 @@ function close() {
     if (savedAnimationEnabled !== null) {
       MMD_SA.THREEX.get_model(0).animation.enabled = savedAnimationEnabled;
       savedAnimationEnabled = null;
+    }
+  } catch (err) {}
+
+  try {
+    if (savedDetectorState) {
+      const camera = System._browser.camera;
+      if (camera.poseNet) camera.poseNet.enabled = savedDetectorState.poseNet;
+      if (camera.facemesh) camera.facemesh.enabled = savedDetectorState.facemesh;
+      if (camera.handpose) camera.handpose.enabled = savedDetectorState.handpose;
+      savedDetectorState = null;
     }
   } catch (err) {}
 }
