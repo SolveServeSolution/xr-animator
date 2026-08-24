@@ -15,6 +15,7 @@ let dragging = null;
 
 let previewMixer, previewAction, previewClip;
 let lastVmdRef = null;
+let savedAnimationEnabled = null;
 
 window.XRA_trimmedVMD = null;
 
@@ -49,6 +50,25 @@ async function setupPreview(vmd) {
     const modelX = MMD_SA.THREEX.get_model(0);
     const target = modelX && modelX.model && modelX.model.scene;
     if (!target) return;
+
+    // BVH track names are VRM humanoid bone names (e.g. "hips") - that's
+    // just a lookup key, not the scene's actual Object3D.name (e.g.
+    // "J_Bip_C_Hips" for a VRoid model). AnimationMixer binds tracks to
+    // scene nodes by exact name match via getObjectByName, so every track
+    // silently fails to bind unless we remap to the real bone name first,
+    // using the model's own vrm-name -> object-name reverse lookup (same
+    // map BVH_FileWriter itself builds from, just inverted).
+    const nameToObjectName = {};
+    for (const objName in (modelX.bone_three_to_vrm_name || {})) {
+      nameToObjectName[modelX.bone_three_to_vrm_name[objName]] = objName;
+    }
+    bvh.clip.tracks.forEach(track => {
+      const dot = track.name.indexOf('.');
+      const boneName = track.name.slice(0, dot);
+      const prop = track.name.slice(dot);
+      const realName = nameToObjectName[boneName];
+      if (realName) track.name = realName + prop;
+    });
 
     previewClip = bvh.clip;
     previewMixer = new THREE.AnimationMixer(target);
@@ -145,12 +165,31 @@ function open(vmd) {
 
   root.classList.add('open');
   render();
+
+  // Pause the model's own animation playback while the trim overlay is
+  // open, so it doesn't fight the preview mixer for control of the same
+  // bones every frame (both would otherwise write to the same skeleton).
+  try {
+    const modelX = MMD_SA.THREEX.get_model(0);
+    if (modelX && modelX.animation) {
+      savedAnimationEnabled = modelX.animation.enabled;
+      modelX.animation.enabled = false;
+    }
+  } catch (err) {}
+
   setupPreview(vmd);
 }
 
 function close() {
   root.classList.remove('open');
   teardownPreview();
+
+  try {
+    if (savedAnimationEnabled !== null) {
+      MMD_SA.THREEX.get_model(0).animation.enabled = savedAnimationEnabled;
+      savedAnimationEnabled = null;
+    }
+  } catch (err) {}
 }
 
 function onApply() {
