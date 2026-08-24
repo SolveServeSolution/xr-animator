@@ -71,8 +71,12 @@ async function setupPreview(vmd) {
       if (realName) track.name = realName + prop;
     });
 
+    // The global `THREE` in this app is jThree's legacy r58 bundle (used for
+    // the MMD/PMX pipeline) and has no AnimationMixer - the VRM model and the
+    // BVH loader's clip are built with the modern three.js at
+    // MMD_SA.THREEX.THREE, so the mixer has to come from there too.
     previewClip = bvh.clip;
-    previewMixer = new THREE.AnimationMixer(target);
+    previewMixer = new MMD_SA.THREEX.THREE.AnimationMixer(target);
     previewAction = previewMixer.clipAction(previewClip);
     previewAction.play();
     previewMixer.setTime(0);
