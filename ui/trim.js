@@ -80,22 +80,27 @@ async function setupPreview(vmd) {
       motionIndex: modelX.animation._motion_index,
     };
 
-    // Ensure animation.enabled = true so the engine ticks the mixer.
+    // Use add_clip() to properly register the clip in the Animation
+    // class's internal arrays (actions[], clips[], action_index). This
+    // ensures the .action getter (used by the engine's time/duration
+    // accessors at MMD_SA.js:8522-8527) returns a valid object rather
+    // than undefined. add_clip() also stops any existing action and
+    // plays the new one.
+    modelX.animation.add_clip(previewClip);
+
+    // Now safe to enable — action_index points to our clip.
     if (!modelX.animation.enabled) {
       modelX.animation.enabled = true;
     }
-    // Stop whatever was playing (idle anim, etc.)
-    modelX.animation.mixer.stopAllAction();
     // Prevent the engine's auto-toggle at MMD_SA.js:9386-9394 from
     // flipping animation.enabled back off mid-trim.
     modelX.animation._motion_index = null;
 
-    // Play our preview clip in paused mode — the mixer evaluates it at
-    // action.time every frame without auto-advancing.
-    previewAction = modelX.animation.mixer.clipAction(previewClip);
+    // Pause so the mixer evaluates at action.time every frame without
+    // auto-advancing. We control time via scrubTo().
+    previewAction = modelX.animation.action;
     previewAction.clampWhenFinished = true;
     previewAction.loop = MMD_SA.THREEX.THREE.LoopOnce;
-    previewAction.play();
     previewAction.paused = true;
     previewAction.time = 0;
   }
@@ -108,19 +113,11 @@ function teardownPreview() {
   if (previewAction) {
     try {
       const modelX = MMD_SA.THREEX.get_model(0);
-      previewAction.stop();
-      modelX.animation.mixer.uncacheClip(previewClip);
-      modelX.animation.mixer.uncacheAction(previewClip);
-
-      if (savedAnimState) {
-        modelX.animation._motion_index = savedAnimState.motionIndex;
-        if (!savedAnimState.wasEnabled) {
-          modelX.animation.enabled = false;
-        } else if (savedAnimState.actionIndex >= 0) {
-          modelX.animation.play(savedAnimState.actionIndex);
-        }
-        savedAnimState = null;
-      }
+      // clear() stops all actions, uncaches clips, and resets arrays
+      modelX.animation.clear();
+      modelX.animation._motion_index = savedAnimState ? savedAnimState.motionIndex : null;
+      modelX.animation.enabled = savedAnimState ? savedAnimState.wasEnabled : false;
+      savedAnimState = null;
     } catch (err) {}
     previewAction = previewClip = null;
   }
