@@ -1,10 +1,5 @@
 // Motion trim overlay - lets the user pick a start/end time range on a
-// recorded mocap clip before export, so e.g. walking back to the laptop
-// to stop recording doesn't end up baked into the exported animation.
-// Standalone vanilla-JS overlay in the spirit of ui/app.js, but scoped
-// just to this one step. Watches motion_recorder.vmd from the outside
-// instead of hooking into the numpad action handlers, so it needs zero
-// changes to the existing record button / dialogue-tree code.
+// recorded mocap clip before export.
 (function () {
 'use strict';
 
@@ -13,9 +8,10 @@ let clipDuration = 0;
 let trimStart = 0, trimEnd = 0;
 let dragging = null;
 
-let previewAction, previewClip;
+let previewMixer, previewAction, previewClip;
+let lastScrubTime = 0;
+let previewFrameCallback = null;
 let lastVmdRef = null;
-let savedAnimState = null;
 let savedDetectorState = null;
 
 window.XRA_trimmedVMD = null;
@@ -33,17 +29,11 @@ function boneKeysDuration(vmd) {
 }
 
 // --- Scrub preview ---
-// Build a THREE.AnimationClip from the recorded boneKeys via the same
-// BVH_FileWriter + BVHLoader pipeline used for FBX export, then inject it
-// into the MODEL'S OWN animation mixer (modelX.animation.mixer). This is
-// critical: the engine calls modelX.animation.mixer.update(delta) every
-// frame as part of its render loop (MMD_SA.js ~line 9437) but ONLY when
-// animation.enabled is true. A separate mixer would never get ticked by
-// the engine and its pose would be overwritten on the very next frame by
-// the engine's per-bone MMD copy loop (which runs when animation_enabled
-// is false). Using the model's mixer means our clip is applied every
-// frame automatically, and with animation_enabled=true + ML_enabled=false
-// the per-bone overwrite loop is skipped entirely.
+// The engine's render loop order (engine/_SA.js:3120-3123) is:
+//   on_animation_update.run(0) -> EV_animate_full (bone writes) -> on_animation_update.run(1)
+// Group 1 callbacks fire AFTER the engine's per-bone update. We register a
+// persistent group-1 callback that re-applies our preview pose every frame,
+// guaranteeing our values are the last written before WebGL renders.
 async function setupPreview(vmd) {
   teardownPreview();
 
@@ -55,10 +45,9 @@ async function setupPreview(vmd) {
     const bvh = loader.parse(bvh_txt);
 
     const modelX = MMD_SA.THREEX.get_model(0);
-    if (!modelX) return;
+    const target = modelX && modelX.mesh;
+    if (!target) return;
 
-    // Remap BVH track names (VRM humanoid keys like "hips") to actual
-    // Object3D.name values in the scene (e.g. "J_Bip_C_Hips").
     const nameToObjectName = {};
     for (const objName in (modelX.bone_three_to_vrm_name || {})) {
       nameToObjectName[modelX.bone_three_to_vrm_name[objName]] = objName;
@@ -72,37 +61,17 @@ async function setupPreview(vmd) {
     });
 
     previewClip = bvh.clip;
+    previewMixer = new MMD_SA.THREEX.THREE.AnimationMixer(target);
+    previewAction = previewMixer.clipAction(previewClip);
+    previewAction.play();
+    previewMixer.setTime(0);
+    lastScrubTime = 0;
 
-    // Save current animation state and take over the model's mixer.
-    savedAnimState = {
-      wasEnabled: modelX.animation.enabled,
-      actionIndex: modelX.animation.action_index,
-      motionIndex: modelX.animation._motion_index,
+    // Register a group-1 callback (runs AFTER engine bone update every frame)
+    previewFrameCallback = function () {
+      if (previewMixer) previewMixer.setTime(lastScrubTime);
     };
-
-    // Use add_clip() to properly register the clip in the Animation
-    // class's internal arrays (actions[], clips[], action_index). This
-    // ensures the .action getter (used by the engine's time/duration
-    // accessors at MMD_SA.js:8522-8527) returns a valid object rather
-    // than undefined. add_clip() also stops any existing action and
-    // plays the new one.
-    modelX.animation.add_clip(previewClip);
-
-    // Now safe to enable — action_index points to our clip.
-    if (!modelX.animation.enabled) {
-      modelX.animation.enabled = true;
-    }
-    // Prevent the engine's auto-toggle at MMD_SA.js:9386-9394 from
-    // flipping animation.enabled back off mid-trim.
-    modelX.animation._motion_index = null;
-
-    // Pause so the mixer evaluates at action.time every frame without
-    // auto-advancing. We control time via scrubTo().
-    previewAction = modelX.animation.action;
-    previewAction.clampWhenFinished = true;
-    previewAction.loop = MMD_SA.THREEX.THREE.LoopOnce;
-    previewAction.paused = true;
-    previewAction.time = 0;
+    System._browser.on_animation_update.add(previewFrameCallback, 0, 1, -1);
   }
   catch (err) {
     console.error('[XRA Trim] preview setup failed', err);
@@ -110,22 +79,18 @@ async function setupPreview(vmd) {
 }
 
 function teardownPreview() {
-  if (previewAction) {
-    try {
-      const modelX = MMD_SA.THREEX.get_model(0);
-      // clear() stops all actions, uncaches clips, and resets arrays
-      modelX.animation.clear();
-      modelX.animation._motion_index = savedAnimState ? savedAnimState.motionIndex : null;
-      modelX.animation.enabled = savedAnimState ? savedAnimState.wasEnabled : false;
-      savedAnimState = null;
-    } catch (err) {}
-    previewAction = previewClip = null;
+  if (previewFrameCallback) {
+    System._browser.on_animation_update.remove(previewFrameCallback, 1);
+    previewFrameCallback = null;
+  }
+  if (previewMixer) {
+    previewMixer.stopAllAction();
+    previewMixer = previewAction = previewClip = null;
   }
 }
 
 function scrubTo(t) {
-  if (!previewAction) return;
-  previewAction.time = Math.max(0, Math.min(t, clipDuration || 0.0001));
+  lastScrubTime = Math.max(0, Math.min(t, clipDuration || 0.0001));
 }
 
 // --- Trim + apply ---
@@ -201,11 +166,7 @@ function open(vmd) {
   root.classList.add('open');
   render();
 
-  // Pause live webcam mocap so tracked rotations don't fight the preview.
-  // With animation_enabled=true (set inside setupPreview) and ML_enabled=false,
-  // the engine's per-bone MMD copy loop is skipped entirely — but we still
-  // need to disable the detectors so they don't write to the jThree MMD bones
-  // which would cause subtle drift if animation is re-enabled later.
+  // Pause live webcam mocap so it doesn't fight the preview.
   try {
     const camera = System._browser && System._browser.camera;
     if (camera) {
@@ -296,8 +257,6 @@ function buildDOM() {
   document.getElementById('xra-trim-close').addEventListener('click', close);
 }
 
-// Poll motion_recorder.vmd - open the trim UI automatically the moment a
-// recording finishes (vmd goes from null to populated).
 let hadVmd = false;
 function pollRecorder() {
   if (!isEngineReady()) return;
@@ -313,8 +272,6 @@ function init() {
   setInterval(pollRecorder, 500);
 }
 
-// Manual re-open (e.g. if closed without applying, or to re-trim the last
-// recording) without needing a fresh recording.
 window.XRA_openTrim = function (vmd) {
   vmd = vmd || System._browser.camera.motion_recorder.vmd;
   if (vmd) open(vmd);
