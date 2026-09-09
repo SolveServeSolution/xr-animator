@@ -8,11 +8,10 @@ let clipDuration = 0;
 let trimStart = 0, trimEnd = 0;
 let dragging = null;
 
-let previewMixer, previewAction, previewClip;
-let lastScrubTime = 0;
-let previewFrameCallback = null;
 let lastVmdRef = null;
 let savedDetectorState = null;
+let isPlaying = false;
+let playheadRAF = null;
 
 window.XRA_trimmedVMD = null;
 
@@ -28,69 +27,221 @@ function boneKeysDuration(vmd) {
   return max;
 }
 
-// --- Scrub preview ---
-// The engine's render loop order (engine/_SA.js:3120-3123) is:
-//   on_animation_update.run(0) -> EV_animate_full (bone writes) -> on_animation_update.run(1)
-// Group 1 callbacks fire AFTER the engine's per-bone update. We register a
-// persistent group-1 callback that re-applies our preview pose every frame,
-// guaranteeing our values are the last written before WebGL renders.
-async function setupPreview(vmd) {
-  teardownPreview();
+// --- Animation clip builder ---
+// Builds a THREE.AnimationClip from recorded boneKeys using the same logic
+// as the engine's export_GLTF_motion (MMD_SA.js:13864). Tracks target the
+// model's normalized bone nodes so the native mixer/animation system works.
+function buildClipFromVMD(vmd) {
+  const THREEX_THREE = MMD_SA.THREEX.THREE;
+  const model = MMD_SA.THREEX.get_model(0);
+  const VRM = MMD_SA.THREEX.VRM;
+  const v1 = new THREE.Vector3();
+  const v2 = new THREE.Vector3();
+  const q1 = new THREE.Quaternion();
+  const q2 = new THREE.Quaternion();
 
-  try {
-    await System._browser.load_script(toFileProtocol(System.Gadget.path + '/export/BVH_filewriter.js'));
-    const module_bvh = await System._browser.load_script(System.Gadget.path + '/three/loaders/_BVHLoader.js', true);
-    const loader = new module_bvh.BVHLoader();
-    const bvh_txt = BVH_FileWriter(null, vmd.boneKeys);
-    const bvh = loader.parse(bvh_txt);
+  let time_max = 0;
+  const boneKeys_by_name = {};
+  vmd.boneKeys.forEach(k => {
+    if (!boneKeys_by_name[k.name])
+      boneKeys_by_name[k.name] = { keys: [], keys_full: [] };
+    boneKeys_by_name[k.name].keys.push(k);
+    time_max = Math.max(time_max, k.time);
+  });
 
-    const modelX = MMD_SA.THREEX.get_model(0);
-    const target = modelX && modelX.mesh;
-    if (!target) return;
+  const f_max = Math.round(time_max * 30) + 1;
 
-    const nameToObjectName = {};
-    for (const objName in (modelX.bone_three_to_vrm_name || {})) {
-      nameToObjectName[modelX.bone_three_to_vrm_name[objName]] = objName;
+  // Interpolate keys for bones that need frame-sync
+  const name_sync = ['全ての親', 'センター', '上半身', '下半身'];
+  for (const d of ['左', '右']) {
+    if (boneKeys_by_name[d + '手捩']) {
+      if (boneKeys_by_name[d + 'ひじ'] && ((boneKeys_by_name[d + '手捩'].keys.length > 2) || boneKeys_by_name[d + '手捩'].keys.some(k => k.rot[3] != 1))) {
+        name_sync.push(d + 'ひじ', d + '手捩');
+      }
     }
-    bvh.clip.tracks.forEach(track => {
-      const dot = track.name.indexOf('.');
-      const boneName = track.name.slice(0, dot);
-      const prop = track.name.slice(dot);
-      const realName = nameToObjectName[boneName];
-      if (realName) track.name = realName + prop;
+  }
+
+  for (const name of name_sync) {
+    const bk = boneKeys_by_name[name];
+    if (!bk) continue;
+    let f = 0;
+    const bk_keys = bk.keys;
+    const bk_keys_full = bk.keys_full;
+    bk_keys.forEach((k, idx) => {
+      const _f = Math.round(k.time * 30);
+      if ((_f > f) && (idx > 0)) {
+        let k_last = bk_keys[idx - 1];
+        const _f_last = Math.round(k_last.time * 30);
+        const _f_diff = _f - _f_last;
+        for (let i = 1; i < _f_diff; i++) {
+          const k_new = {
+            time: (_f_last + i) / 30,
+            pos: v1.fromArray(k_last.pos).lerp(v2.fromArray(k.pos), i / _f_diff).toArray(),
+            rot: q1.fromArray(k_last.rot).slerp(q2.fromArray(k.rot), i / _f_diff).toArray()
+          };
+          bk_keys_full.push(k_new);
+        }
+      }
+      bk_keys_full.push(k);
+      f++;
     });
-
-    previewClip = bvh.clip;
-    previewMixer = new MMD_SA.THREEX.THREE.AnimationMixer(target);
-    previewAction = previewMixer.clipAction(previewClip);
-    previewAction.play();
-    previewMixer.setTime(0);
-    lastScrubTime = 0;
-
-    // Register a group-1 callback (runs AFTER engine bone update every frame)
-    previewFrameCallback = function () {
-      if (previewMixer) previewMixer.setTime(lastScrubTime);
-    };
-    System._browser.on_animation_update.add(previewFrameCallback, 0, 1, -1);
+    if (bk_keys_full.length < f_max) {
+      const k_last = bk_keys_full[bk_keys_full.length - 1];
+      for (let i = bk_keys_full.length; i < f_max; i++) {
+        const k = Object.assign({}, k_last);
+        k.time = i / 30;
+        bk_keys_full.push(k);
+      }
+    }
   }
-  catch (err) {
-    console.error('[XRA Trim] preview setup failed', err);
+
+  const tracks = [];
+  const leg_scale = model.para.left_leg_length / MMD_SA_options.model_para_obj.left_leg_length;
+
+  for (const name_MMD in boneKeys_by_name) {
+    let name = VRM.bone_map_MMD_to_VRM[name_MMD];
+    let name_MMD_translated = name_MMD;
+    if (!name && (name_MMD.indexOf('足ＩＫ') != -1)) {
+      name_MMD_translated = name_MMD.charAt(0) + '足首';
+      name = VRM.bone_map_MMD_to_VRM[name_MMD_translated];
+    }
+
+    if (name) {
+      const d = (/(left|right)LowerArm/.test(name)) ? ((RegExp.$1 == 'left') ? '左' : '右') : null;
+      const keys = (boneKeys_by_name[name_MMD].keys_full.length) ? boneKeys_by_name[name_MMD].keys_full : boneKeys_by_name[name_MMD].keys;
+
+      let times = [];
+      let q_values = [];
+      let v_values = [];
+
+      keys.forEach((k, f) => {
+        let q_multiply, q_premultiply;
+
+        if (name == 'hips') {
+          const pos = v1.fromArray(k.pos);
+          const bone_move = boneKeys_by_name['全ての親'];
+          if (bone_move) {
+            pos.add(v2.fromArray(bone_move.keys_full[f].pos));
+          }
+          pos.multiplyScalar(1 / VRM.vrm_scale);
+          pos.multiplyScalar(leg_scale);
+          pos.add(v2.fromArray(model.para.pos0['hips']));
+          v_values.push(...model.process_position(pos).toArray());
+
+          const bone_lower_body = boneKeys_by_name['下半身'];
+          if (bone_lower_body)
+            q_multiply = bone_lower_body.keys_full[f].rot;
+        }
+        else if (name == 'spine') {
+          const bone_lower_body = boneKeys_by_name['下半身'];
+          if (bone_lower_body)
+            q_premultiply = q1.fromArray(bone_lower_body.keys_full[f].rot).conjugate().toArray();
+        }
+        else if (d) {
+          const bone_twist = boneKeys_by_name[d + '手捩'];
+          if (bone_twist)
+            q_multiply = bone_twist.keys_full[f].rot;
+        }
+
+        const q = q1.fromArray(k.rot);
+        if (q_multiply)
+          q.multiply(q2.fromArray(q_multiply));
+        if (q_premultiply)
+          q.premultiply(q2.fromArray(q_premultiply));
+
+        q_values.push(...model.process_rotation(q).toArray());
+        times.push(k.time);
+      });
+
+      const bone_node = model.get_bone_by_MMD_name(name_MMD_translated);
+      if (!bone_node) continue;
+      const node_name = bone_node.name;
+
+      if (v_values.length)
+        tracks.push(new THREEX_THREE.VectorKeyframeTrack(node_name + '.position', times, v_values));
+      tracks.push(new THREEX_THREE.QuaternionKeyframeTrack(node_name + '.quaternion', times, q_values));
+    }
+  }
+
+  return new THREEX_THREE.AnimationClip('trim-preview', time_max, tracks);
+}
+
+// --- Playback ---
+function startPlayback() {
+  if (!lastVmdRef || isPlaying) return;
+  const status = document.getElementById('xra-trim-status');
+  try {
+    const modelX = MMD_SA.THREEX.get_model(0);
+    if (!modelX) { status.textContent = 'ERR: no model'; status.classList.add('visible'); return; }
+
+    const trimmedVMD = applyTrim(lastVmdRef);
+    const clip = buildClipFromVMD(trimmedVMD);
+    console.log('[XRA Trim] clip:', clip.duration, 'tracks:', clip.tracks.length, clip.tracks.slice(0,3).map(t=>t.name));
+
+    if (!clip.tracks.length) { status.textContent = 'ERR: 0 tracks built'; status.classList.add('visible'); return; }
+
+    modelX.animation.add_clip(clip);
+    modelX.animation.enabled = true;
+
+    status.textContent = 'Playing (' + clip.tracks.length + ' tracks, ' + (trimEnd - trimStart).toFixed(1) + 's)';
+    status.classList.add('visible');
+
+    isPlaying = true;
+    updatePlayButton();
+    startPlayheadTracker();
+  } catch (err) {
+    console.error('[XRA Trim] playback failed', err);
+    status.textContent = 'ERR: ' + err.message;
+    status.classList.add('visible');
   }
 }
 
-function teardownPreview() {
-  if (previewFrameCallback) {
-    System._browser.on_animation_update.remove(previewFrameCallback, 1);
-    previewFrameCallback = null;
-  }
-  if (previewMixer) {
-    previewMixer.stopAllAction();
-    previewMixer = previewAction = previewClip = null;
-  }
+function stopPlayback() {
+  if (!isPlaying) return;
+  try {
+    const modelX = MMD_SA.THREEX.get_model(0);
+    if (modelX) modelX.animation.enabled = false;
+  } catch (err) {}
+  isPlaying = false;
+  stopPlayheadTracker();
+  updatePlayButton();
 }
 
-function scrubTo(t) {
-  lastScrubTime = Math.max(0, Math.min(t, clipDuration || 0.0001));
+function updatePlayButton() {
+  const btn = document.getElementById('xra-trim-play');
+  if (btn) btn.textContent = isPlaying ? 'Stop' : 'Play';
+}
+
+function startPlayheadTracker() {
+  stopPlayheadTracker();
+  const trimDuration = trimEnd - trimStart;
+  function tick() {
+    if (!isPlaying) return;
+    try {
+      const modelX = MMD_SA.THREEX.get_model(0);
+      if (modelX && modelX.animation.enabled) {
+        const t = modelX.animation.time;
+        if (playheadEl) {
+          playheadEl.style.left = pctFromTime(trimStart + t) + '%';
+          playheadEl.style.display = 'block';
+        }
+        if (t >= trimDuration) {
+          stopPlayback();
+          return;
+        }
+      }
+    } catch (err) {}
+    playheadRAF = requestAnimationFrame(tick);
+  }
+  playheadRAF = requestAnimationFrame(tick);
+}
+
+function stopPlayheadTracker() {
+  if (playheadRAF) {
+    cancelAnimationFrame(playheadRAF);
+    playheadRAF = null;
+  }
+  if (playheadEl) playheadEl.style.display = 'none';
 }
 
 // --- Trim + apply ---
@@ -143,16 +294,10 @@ function onPointerMove(e) {
     trimEnd = Math.min(clipDuration, trimEnd);
   }
   render();
-  scrubTo(dragging === 'start' ? trimStart : trimEnd);
 }
 
 function onPointerUp() {
   dragging = null;
-}
-
-function onTimelineScrub(e) {
-  if (dragging) return;
-  scrubTo(timeFromClientX(e.clientX));
 }
 
 function open(vmd) {
@@ -180,13 +325,16 @@ function open(vmd) {
       if (camera.handpose) camera.handpose.enabled = false;
     }
   } catch (err) {}
-
-  setupPreview(vmd);
 }
 
 function close() {
+  stopPlayback();
   root.classList.remove('open');
-  teardownPreview();
+
+  // Auto-apply trim on close so exports use the trimmed range
+  if (lastVmdRef && (trimStart > 0 || trimEnd < clipDuration)) {
+    window.XRA_trimmedVMD = applyTrim(lastVmdRef);
+  }
 
   try {
     if (savedDetectorState) {
@@ -215,6 +363,11 @@ function onReset() {
   render();
 }
 
+function onPlayToggle() {
+  if (isPlaying) stopPlayback();
+  else startPlayback();
+}
+
 function buildDOM() {
   root = document.createElement('div');
   root.id = 'xra-trim-overlay';
@@ -224,6 +377,7 @@ function buildDOM() {
       <div class="xra-trim-sub" id="xra-trim-duration-label"></div>
       <div class="xra-trim-timeline" id="xra-trim-timeline">
         <div class="xra-trim-range" id="xra-trim-range"></div>
+        <div class="xra-trim-playhead" id="xra-trim-playhead"></div>
         <div class="xra-trim-handle" id="xra-trim-start" title="Start"></div>
         <div class="xra-trim-handle" id="xra-trim-end" title="End"></div>
       </div>
@@ -233,6 +387,7 @@ function buildDOM() {
       </div>
       <div class="xra-trim-status" id="xra-trim-status"></div>
       <div class="xra-trim-actions">
+        <button id="xra-trim-play">Play</button>
         <button id="xra-trim-reset">Reset</button>
         <button id="xra-trim-apply" class="primary">Apply Trim</button>
         <button id="xra-trim-close">Close</button>
@@ -245,13 +400,14 @@ function buildDOM() {
   rangeEl = document.getElementById('xra-trim-range');
   startHandle = document.getElementById('xra-trim-start');
   endHandle = document.getElementById('xra-trim-end');
+  playheadEl = document.getElementById('xra-trim-playhead');
 
   startHandle.addEventListener('pointerdown', onPointerDown('start'));
   endHandle.addEventListener('pointerdown', onPointerDown('end'));
   window.addEventListener('pointermove', onPointerMove);
   window.addEventListener('pointerup', onPointerUp);
-  timelineEl.addEventListener('click', onTimelineScrub);
 
+  document.getElementById('xra-trim-play').addEventListener('click', onPlayToggle);
   document.getElementById('xra-trim-apply').addEventListener('click', onApply);
   document.getElementById('xra-trim-reset').addEventListener('click', onReset);
   document.getElementById('xra-trim-close').addEventListener('click', close);

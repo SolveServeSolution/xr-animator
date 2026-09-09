@@ -57,6 +57,18 @@
   pointer-events: none;
 }
 
+#xra-trim-overlay .xra-trim-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  pointer-events: none;
+  display: none;
+  z-index: 1;
+}
+
 #xra-trim-overlay .xra-trim-handle {
   position: absolute;
   top: -4px;
