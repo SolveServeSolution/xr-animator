@@ -1,4 +1,25 @@
-﻿# XR Animator
+﻿> ## ⚠️ This is a hard fork of XR Animator
+>
+> **Original project: [ButzYung/SystemAnimatorOnline](https://github.com/ButzYung/SystemAnimatorOnline)** — created by [Butz Yung / Anime Theme](http://www.animetheme.com/sidebar/).
+>
+> All credit for XR Animator, System Animator, and the underlying motion capture engine goes to the original author. This repository is a downstream fork and is **not** affiliated with or endorsed by the original project. It is distributed under the same [CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) license as the upstream project.
+>
+> Forked from upstream `v0.34.3`.
+>
+> ### Changes made in this fork
+>
+> - **Mixamo-compatible FBX motion export** — new FBX writer (`export/`) that emits bind-pose translations and correctly-named `AnimationCurveNode` entries so exported motions load in Mixamo and standard FBX importers
+> - **Opt-in root motion** for FBX export, with a numpad menu entry to toggle it
+> - **Trim UI for recorded mocap** — visual timeline to select a start/end range on a recording before export, with playback preview
+> - **BVH export fix** — stopped double-counting the hip rest offset in motion data
+> - **Re-enabled X/Y One Euro filtering** for full-body pose landmarks
+> - **Repo restructure** into `engine/`, `mocap/`, `export/`, `ui/`, `platform/`, `assets/` with runtime paths repaired
+>
+> Everything not listed above is the original author's work.
+
+---
+
+# XR Animator
 
 ### Full-body, real-time motion tracking with a single webcam, on your PC and web browser
 
@@ -6,7 +27,7 @@
   <img width="640" height="360" title="XR Animator" src="https://github.com/ButzYung/SystemAnimatorOnline/raw/master/images/XR_Animator_thumbnail01.png">
 </p>
 
-XR Animator, inherited from my previous desktop gadget project known as System Animator, is a video/webcam-based AI motion capture application designed for VTubing and the metaverse era. It uses the machine learning (ML) solution from [MediaPipe](https://github.com/google/mediapipe) and [TensorFlow.js](https://github.com/tensorflow/tfjs-models) to detect the 3D poses from a live webcam video, which is then used to drive the 3D avatar (MMD/VRM model) as if you are controlling it with your body. It can be used for VTubing and various XR/3D purposes.
+XR Animator, inherited from the author's previous desktop gadget project known as System Animator, is a video/webcam-based AI motion capture application designed for VTubing and the metaverse era. It uses the machine learning (ML) solution from [MediaPipe](https://github.com/google/mediapipe) and [TensorFlow.js](https://github.com/tensorflow/tfjs-models) to detect the 3D poses from a live webcam video, which is then used to drive the 3D avatar (MMD/VRM model) as if you are controlling it with your body. It can be used for VTubing and various XR/3D purposes.
 
 It has a variety of motion tracking options. You can choose to track the face, full body, or something in between (any combination of face/body/hands).
 
@@ -124,6 +145,10 @@ Eventually, I decided to put the project on Github for my own convenience, but t
 All demos support the use of custom MMD (MikuMikuDance) model. Drop a zip of your favorite MMD model at the beginning, press the START button, and the demo will proceed with your model instead of the default one.
 
 # Copyright/License/Credits
+
+### Upstream project:
+
+This repository is a hard fork of **[XR Animator / SystemAnimatorOnline](https://github.com/ButzYung/SystemAnimatorOnline)** © Butz Yung / Anime Theme. The original project is the source of essentially all of the code here; see [Changes made in this fork](#️-this-is-a-hard-fork-of-xr-animator) at the top of this file for the list of modifications. This fork inherits the upstream CC BY-NC-SA 4.0 license, including its ShareAlike and NonCommercial terms.
 
 ### General license:
 - License (CC BY-NC-SA 4.0) - http://creativecommons.org/licenses/by-nc-sa/4.0/
